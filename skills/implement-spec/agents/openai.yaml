@@ -1,5 +1,5 @@
 interface:
   display_name: "Implement Spec"
-  short_description: "Implement the result of /to-spec and /to-tickets in code."
+  short_description: "/to-spec과 /to-tickets의 결과물을 코드로 구현한다."
 policy:
   allow_implicit_invocation: false

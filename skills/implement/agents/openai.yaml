@@ -1,5 +1,5 @@
 interface:
   display_name: "Implement"
-  short_description: "Build work from a spec or tickets"
+  short_description: "명세나 티켓대로 작업을 만든다"
 policy:
   allow_implicit_invocation: false

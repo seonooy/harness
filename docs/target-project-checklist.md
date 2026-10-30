@@ -1,47 +1,47 @@
 # Target Project Checklist
 
-Use this before installing the harness into a target repository.
+하네스를 대상 저장소에 설치하기 전에 쓴다.
 
-## Identify Target
+## 대상 확인
 
-- Current directory from `pwd`
-- Git repo state from `git status --short --branch`
-- Base branch from `git branch --show-current` and existing branch policy
-- Whether the target should track harness files in git
+- `pwd`로 본 현재 폴더
+- `git status --short --branch`로 본 git 저장소 상태
+- `git branch --show-current`와 기존 브랜치 정책으로 정한 기준 브랜치
+- 대상이 하네스 파일을 git으로 추적해야 하는지
 
-## Read Existing Instructions
+## 기존 지침 읽기
 
 - `AGENTS.md`
 - `README.md`
-- `.github/` templates
-- existing `.ai/` or docs for agent workflow
+- `.github/` 템플릿
+- 에이전트 워크플로를 다룬 기존 `.ai/`나 문서
 
-Preserve useful project-specific rules. Do not replace them with generic harness
-rules unless they conflict with the selected workflow.
+프로젝트에 쓸모 있는 규칙은 보존한다. 고른 워크플로와 충돌하지 않으면 일반 하네스 규칙으로
+바꾸지 않는다.
 
-## Infer Project Facts
+## 프로젝트 사실 알아내기
 
-Look for:
+찾아볼 것:
 
-- language and framework
-- package manager
-- test commands
-- lint/typecheck commands
-- runtime/dev server commands
-- generated output directories
-- secret/env conventions
-- public API or schema files
-- migrations/dependency boundaries
-- frontend/backend split
-- existing CI commands
+- 언어와 프레임워크
+- 패키지 매니저
+- 테스트 명령
+- 린트·타입 검사 명령
+- 런타임·개발 서버 명령
+- 생성물 출력 폴더
+- 시크릿·환경 변수 규칙
+- 공개 API나 스키마 파일
+- 마이그레이션·의존성 경계
+- 프론트엔드/백엔드 분리
+- 기존 CI 명령
 
-## Choose Harness Mode
+## 하네스 모드 고르기
 
-- GitHub Issue mode: shared issue/PR workflow.
-- Local AI Issue mode: personal local harness excluded from git.
-- Hybrid mode: both, with explicit precedence.
+- GitHub Issue mode: 공유 issue/PR 워크플로.
+- Local AI Issue mode: git에서 제외하는 개인 로컬 하네스.
+- Hybrid mode: 둘 다 쓰되 우선순위를 명시한다.
 
-If unclear, ask one concise question:
+불분명하면 짧게 한 번만 묻는다:
 
 ```text
 이 하네스는 GitHub Issue 공유용, 로컬 개인 .ai 이슈용, 아니면 둘 다 쓰는 hybrid 중 뭐로 둘까?
@@ -71,12 +71,12 @@ If unclear, ask one concise question:
   새 저장소라도 팀·회사 저장소에 올릴 수 있으면(회사 일, 원격 미정) 모호한 경우다. 공유로 깔면 팀원도 키트의
   hook과 지침을 받는다는 점을 같이 말한다.
 
-## Verify Install
+## 설치 확인
 
-- `AGENTS.md` has concrete project commands and paths.
-- selected task source exists:
+- `AGENTS.md`에 구체적인 프로젝트 명령과 경로가 있다.
+- 고른 작업 출처가 있다:
   - GitHub: `.github/ISSUE_TEMPLATE/agent_task.md`
-  - Local: `.ai/tasks.md` and `.ai/issues/`
-- Local mode updates `.git/info/exclude`.
-- No placeholder tokens remain.
-- Future prompt examples are included in the final report.
+  - Local: `.ai/tasks.md`와 `.ai/issues/`
+- Local mode는 `.git/info/exclude`를 고쳤다.
+- 자리표시자 토큰이 남아 있지 않다.
+- 최종 보고에 이후 프롬프트 예시가 들어 있다.

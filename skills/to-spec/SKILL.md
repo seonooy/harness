@@ -1,76 +1,76 @@
 ---
 name: to-spec
-description: "Turn the current conversation into a spec and publish it to the project issue tracker: no interview, just synthesis of what you've already discussed."
+description: "현재 대화를 명세(spec)로 바꿔 프로젝트 이슈 트래커에 게시한다. 인터뷰는 하지 않고, 이미 논의한 내용을 종합만 한다."
 disable-model-invocation: true
 ---
 
-This skill takes the current conversation context and codebase understanding and produces a spec. Do NOT interview the user; just synthesize what you already know.
+이 스킬은 현재 대화의 맥락과 코드베이스에 대한 이해를 가져와 명세(spec)를 만든다. 사용자를 인터뷰하지 **않는다**. 이미 아는 것을 종합하기만 한다.
 
-The issue tracker and triage label vocabulary should have been provided to you. If not, tell the user to run `$setup-matt-pocock-skills`.
+이슈 트래커와 트리아지 라벨 어휘는 미리 받았어야 한다. 받지 못했다면 사용자에게 `$setup-matt-pocock-skills`를 실행하라고 말한다.
 
-## Process
+## 절차
 
-1. Explore the repo to understand the current state of the codebase, if you haven't already. Use the project's domain glossary vocabulary throughout the spec, and respect any ADRs in the area you're touching.
+1. 아직 하지 않았다면 저장소를 살펴 코드베이스의 현재 상태를 파악한다. 명세 전체에서 프로젝트의 도메인 용어집 어휘를 쓰고, 손대는 영역의 ADR을 존중한다.
 
-2. Sketch out the seams at which you're going to test the feature. Existing seams should be preferred to new ones. Use the highest seam possible. If new seams are needed, propose them at the highest point you can. The fewer seams across the codebase, the better - the ideal number is one. Decide each module's test size (unit, integration, end-to-end, or none) and the user flows that get an end-to-end test with the criteria in `~/.agents/skills/tidy-tests/references/test-criteria.md`.
+2. 기능을 테스트할 seam을 스케치한다. 새 seam보다 기존 seam을 우선한다. 가능한 가장 높은 seam을 쓴다. 새 seam이 필요하면 가능한 가장 높은 지점에 제안한다. 코드베이스 전체의 seam은 적을수록 좋고, 이상적인 개수는 하나다. 모듈마다 테스트 크기(단위, 통합, end-to-end, 또는 없음)와 end-to-end 테스트를 받을 사용자 플로우를 `~/.agents/skills/tidy-tests/references/test-criteria.md`의 기준으로 정한다.
 
-Check with the user that these seams match their expectations.
+이 seam이 사용자의 기대와 맞는지 사용자와 확인한다.
 
-3. Write the spec using the template below, then publish it to the project issue tracker. Apply the `ready-for-agent` triage label - no need for additional triage.
+3. 아래 템플릿으로 명세를 쓰고 프로젝트 이슈 트래커에 게시한다. `ready-for-agent` 트리아지 라벨을 붙인다. 따로 트리아지할 필요는 없다.
 
 <spec-template>
 
 ## Problem Statement
 
-The problem that the user is facing, from the user's perspective.
+사용자가 겪는 문제. 사용자의 관점에서 쓴다.
 
 ## Solution
 
-The solution to the problem, from the user's perspective.
+그 문제의 해결책. 사용자의 관점에서 쓴다.
 
 ## User Stories
 
-A LONG, numbered list of user stories. Each user story should be in the format of:
+번호를 붙인 **긴** 사용자 스토리 목록. 사용자 스토리는 각각 다음 형식이어야 한다.
 
-1. As an <actor>, I want a <feature>, so that <benefit>
+1. <행위자>로서, <기능>을 원한다. 그러면 <이점>을 얻을 수 있다
 
 <user-story-example>
-1. As a mobile bank customer, I want to see balance on my accounts, so that I can make better informed decisions about my spending
+1. 모바일 뱅킹 고객으로서, 내 계좌의 잔액을 보고 싶다. 그러면 지출을 더 잘 판단할 수 있다
 </user-story-example>
 
-This list of user stories should be extremely extensive and cover all aspects of the feature.
+이 사용자 스토리 목록은 아주 방대해야 하고 기능의 모든 측면을 다뤄야 한다.
 
 ## Implementation Decisions
 
-A list of implementation decisions that were made. This can include:
+내린 구현 결정의 목록. 다음을 포함할 수 있다.
 
-- The modules that will be built/modified
-- The interfaces of those modules that will be modified
-- Technical clarifications from the developer
-- Architectural decisions
-- Schema changes
-- API contracts
-- Specific interactions
+- 만들거나 고칠 모듈
+- 고칠 그 모듈들의 인터페이스
+- 개발자의 기술적 설명
+- 아키텍처 결정
+- 스키마 변경
+- API 계약
+- 구체적인 상호작용
 
-Do NOT include specific file paths or code snippets. They may end up being outdated very quickly.
+구체적인 파일 경로나 코드 스니펫은 넣지 **않는다**. 금방 낡을 수 있다.
 
-Exception: if a prototype produced a snippet that encodes a decision more precisely than prose can (state machine, reducer, schema, type shape), inline it within the relevant decision and note briefly that it came from a prototype. Trim to the decision-rich parts, not a working demo, just the important bits.
+예외: 프로토타입이 만든 스니펫이 산문보다 결정을 더 정확히 담고 있으면(상태 머신, 리듀서, 스키마, 타입 모양) 해당 결정 안에 인라인하고, 프로토타입에서 나왔다고 짧게 적는다. 동작하는 데모가 아니라 결정이 담긴 부분만 추려서, 중요한 대목만 남긴다.
 
 ## Testing Decisions
 
-A list of testing decisions that were made. Include:
+내린 테스트 결정의 목록. 다음을 포함한다.
 
-- A description of what makes a good test (only test external behavior, not implementation details)
-- Which modules will be tested, at which test size, and which are left untested and why
-- The user flows that get an end-to-end test
-- Prior art for the tests (i.e. similar types of tests in the codebase)
+- 좋은 테스트의 조건에 대한 설명(구현 세부사항이 아니라 외부 동작만 테스트한다)
+- 어느 모듈을 어느 테스트 크기로 테스트할지, 어느 모듈을 테스트하지 않고 두며 그 이유가 무엇인지
+- end-to-end 테스트를 받을 사용자 플로우
+- 테스트의 선례(prior art, 즉 코드베이스에 있는 비슷한 종류의 테스트)
 
 ## Out of Scope
 
-A description of the things that are out of scope for this spec.
+이 명세의 범위 밖인 것에 대한 설명.
 
 ## Further Notes
 
-Any further notes about the feature.
+기능에 대한 그 밖의 메모.
 
 </spec-template>

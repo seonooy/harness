@@ -8,8 +8,8 @@
 -
 
 ## Verification
-- [ ] Command:
-- [ ] Result:
+- [ ] 명령:
+- [ ] 결과:
 
 ## Screenshots / Logs
 필요하면 첨부

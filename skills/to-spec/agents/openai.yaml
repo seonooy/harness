@@ -1,5 +1,5 @@
 interface:
   display_name: "To Spec"
-  short_description: "Turn a conversation into a spec"
+  short_description: "대화를 명세로 바꾼다"
 policy:
   allow_implicit_invocation: false

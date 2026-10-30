@@ -1,83 +1,83 @@
 ---
 name: to-tickets
-description: Break a plan, spec, or the current conversation into a set of tracer-bullet tickets, each declaring its blocking edges, published to the configured tracker (edges as text in one file per ticket locally, or native blocking links on a real tracker).
+description: "계획, 명세, 또는 현재 대화를 트레이서 불릿(tracer bullet) 티켓 묶음으로 쪼갠다. 티켓마다 자신을 막는(blocking) 관계를 선언하고, 설정된 트래커에 게시한다(관계는 로컬에서는 티켓당 파일 하나 안의 텍스트로, 실제 트래커에서는 네이티브 blocking 링크로)."
 disable-model-invocation: true
 ---
 
-# To Tickets
+# 티켓으로 쪼개기
 
-Break a plan, spec, or conversation into a set of **tickets**: tracer-bullet vertical slices, each declaring the tickets that **block** it.
+계획, 명세, 대화를 **티켓(ticket)** 묶음으로 쪼갠다. 티켓은 트레이서 불릿(tracer bullet) 방식의 수직 슬라이스(vertical slice)이고, 각 티켓은 자신을 **막는(block)** 티켓을 선언한다.
 
-The issue tracker and triage label vocabulary should have been provided to you. If not, tell the user to run `$setup-matt-pocock-skills`.
+이슈 트래커와 트리아지 라벨 어휘는 미리 받았어야 한다. 받지 못했다면 사용자에게 `$setup-matt-pocock-skills`를 실행하라고 말한다.
 
-## Process
+## 절차
 
-### 1. Gather context
+### 1. 맥락 모으기
 
-Work from whatever is already in the conversation context. If the user passes a reference (a spec path, an issue number or URL) as an argument, fetch it and read its full body and comments.
+이미 대화 맥락에 있는 것으로 일한다. 사용자가 참조(명세 경로, 이슈 번호나 URL)를 인자로 주면 가져와서 본문 전체와 댓글을 읽는다.
 
-### 2. Explore the codebase (optional)
+### 2. 코드베이스 살펴보기(선택)
 
-If you have not already explored the codebase, do so to understand the current state of the code. Ticket titles and descriptions should use the project's domain glossary vocabulary, and respect ADRs in the area you're touching.
+아직 코드베이스를 살펴보지 않았다면 살펴서 코드의 현재 상태를 파악한다. 티켓의 제목과 설명은 프로젝트의 도메인 용어집 어휘를 쓰고, 손대는 영역의 ADR을 존중한다.
 
-Look for opportunities to prefactor the code to make the implementation easier. "Make the change easy, then make the easy change."
+구현을 쉽게 만들 사전 리팩터링(prefactor)의 기회를 찾는다. "변경을 쉽게 만든 다음, 그 쉬운 변경을 하라."
 
-### 3. Draft vertical slices
+### 3. 수직 슬라이스 초안 쓰기
 
-Break the work into **tracer bullet** tickets.
+작업을 **트레이서 불릿** 티켓으로 쪼갠다.
 
 <vertical-slice-rules>
 
-- Each slice cuts a narrow but COMPLETE path through every layer (schema, API, UI, tests): vertical, NOT a horizontal slice of one layer
-- A completed slice is demoable or verifiable on its own
-- Each slice is sized to fit in a single fresh context window
-- Any prefactoring should be done first
+- 슬라이스마다 모든 층(스키마, API, UI, 테스트)을 가로지르는 좁지만 완전한 경로를 낸다. 한 층만 자르는 수평 슬라이스가 아니라 수직이다
+- 완료된 슬라이스는 그것만으로 시연하거나 검증할 수 있다
+- 슬라이스는 새 컨텍스트 창 하나에 들어가는 크기로 잡는다
+- 사전 리팩터링은 먼저 한다
 
 </vertical-slice-rules>
 
-Give each ticket its **blocking edges**: the other tickets that must complete before it can start. A ticket with no blockers can start immediately.
+티켓마다 **막는 관계(blocking edge)**를 준다. 시작하려면 먼저 끝나야 하는 다른 티켓들이다. 막는 티켓이 없는 티켓은 바로 시작할 수 있다.
 
-**Wide refactors are the exception to vertical slicing.** A **wide refactor** is one mechanical change (rename a column, retype a shared symbol) whose **blast radius** fans across the whole codebase, so a single edit breaks thousands of call sites at once and no vertical slice can land green. Don't force it into a tracer bullet; sequence it as **expand–contract**. First expand: add the new form beside the old so nothing breaks. Then migrate the call sites over in batches sized by blast radius (per package, per directory), each batch its own ticket blocked by the expand, keeping CI green batch to batch because the old form still exists. Finally contract: delete the old form once no caller remains, in a ticket blocked by every migrate batch. When even the batches can't stay green alone, keep the sequence but let them share an integration branch that all block a final integrate-and-verify ticket; green is promised only there.
+**광범위 리팩터링(wide refactor)은 수직 슬라이싱의 예외다.** 광범위 리팩터링은 기계적 변경 하나(컬럼 이름 바꾸기, 공유 심볼의 타입 바꾸기)가 **영향 범위(blast radius)**를 코드베이스 전체로 퍼뜨리는 경우다. 수정 한 번에 호출 지점 수천 곳이 한꺼번에 깨져서, 어떤 수직 슬라이스도 green으로 착지할 수 없다. 이것을 트레이서 불릿에 억지로 끼워 넣지 않는다. **expand–contract**(확장 후 축소) 순서로 짠다. 먼저 expand: 새 형태를 옛 형태 옆에 추가해서 아무것도 깨지지 않게 한다. 그다음 호출 지점을 영향 범위에 맞춘 배치(패키지별, 디렉터리별)로 나눠 옮긴다(migrate). 배치마다 따로 티켓을 만들고 expand 티켓이 막게 한다. 옛 형태가 아직 있으므로 배치에서 배치로 가는 동안 CI는 green을 유지한다. 마지막으로 contract: 호출자가 하나도 남지 않으면 옛 형태를 지운다. 이 티켓은 모든 migrate 배치가 막는다. 배치마저 혼자서는 green을 유지할 수 없으면 순서는 그대로 두되, 배치들이 통합 브랜치를 공유하게 하고 그 배치 전부가 마지막 통합·검증(integrate-and-verify) 티켓을 막게 한다. green은 그 티켓에서만 약속한다.
 
-### 4. Quiz the user
+### 4. 사용자에게 확인받기
 
-Present the proposed breakdown as a numbered list. For each ticket, show:
+제안하는 분해를 번호 목록으로 보여 준다. 티켓마다 이것을 보여 준다.
 
-- **Title**: short descriptive name
-- **Blocked by**: which other tickets (if any) must complete first
-- **What it delivers**: the end-to-end behaviour this ticket makes work
+- **제목**: 짧고 설명적인 이름
+- **Blocked by**: 먼저 끝나야 하는 다른 티켓(있다면)
+- **제공하는 것**: 이 티켓이 동작하게 만드는 end-to-end 동작
 
-Ask the user:
+사용자에게 묻는다.
 
-- Does the granularity feel right? (too coarse / too fine)
-- Are the blocking edges correct: does each ticket only depend on tickets that genuinely gate it?
-- Should any tickets be merged or split further?
+- 크기가 알맞게 느껴지는가? (너무 크다 / 너무 잘다)
+- 막는 관계가 맞는가? 티켓마다 정말로 자신을 가로막는 티켓에만 의존하는가?
+- 합치거나 더 쪼갤 티켓이 있는가?
 
-Iterate until the user approves the breakdown.
+사용자가 분해를 승인할 때까지 반복한다.
 
-### 5. Publish the tickets to the configured tracker
+### 5. 설정된 트래커에 티켓 게시
 
-Publish the approved tickets. **How** depends on the tracker `$setup-matt-pocock-skills` configured; the tickets are the same either way, only the shape of the blocking edges changes:
+승인된 티켓을 게시한다. **어떻게** 하는지는 `$setup-matt-pocock-skills`가 설정한 트래커에 달려 있다. 티켓은 어느 쪽이든 같고, 막는 관계의 모양만 달라진다.
 
-- **Local files** → write one file per ticket under `.scratch/<feature-slug>/issues/<NN>-<slug>.md`, numbered from `01` in dependency order (blockers first). Each file's "Blocked by" lists the numbers/titles it depends on. Use the per-ticket file template below: one ticket per file, never a single combined file.
-- **A real issue tracker (GitHub, Linear, …)** → publish one issue per ticket in dependency order (blockers first) so each ticket's blocking edges can reference real identifiers. Use the platform's native blocking relationship where it has one; otherwise set each ticket's "Blocked by" to the blocking issues. If the source was an existing issue, make each ticket its sub-issue (tracker doc's operation). Apply the `ready-for-agent` triage label unless instructed otherwise; the tickets are agent-grabbable by construction.
+- **로컬 파일** → 티켓마다 파일 하나를 `.scratch/<feature-slug>/issues/<NN>-<slug>.md`에 쓴다. 번호는 `01`부터 의존 순서대로(막는 티켓이 먼저) 매긴다. 각 파일의 "Blocked by"에 그 티켓이 의존하는 번호/제목을 적는다. 아래의 티켓별 파일 템플릿을 쓴다. 파일 하나에 티켓 하나이고, 하나로 합친 파일은 절대 만들지 않는다.
+- **실제 이슈 트래커(GitHub, Linear, …)** → 의존 순서대로(막는 티켓이 먼저) 티켓마다 이슈 하나를 게시해서, 각 티켓의 막는 관계가 실제 식별자를 참조할 수 있게 한다. 플랫폼에 네이티브 blocking 관계가 있으면 그것을 쓰고, 없으면 티켓마다 "Blocked by"에 막는 이슈를 적는다. 출처가 기존 이슈였다면 각 티켓을 그 이슈의 하위 이슈로 만든다(트래커 문서의 작업). 따로 지시받지 않았다면 `ready-for-agent` 트리아지 라벨을 붙인다. 티켓은 구성상 에이전트가 가져갈 수 있다.
 
-Work the **frontier**: any ticket whose blockers are all done. For a purely linear chain that means top to bottom.
+**프론티어(frontier)** 기준으로 일한다. 프론티어는 막는 티켓이 모두 끝난 티켓 전부다. 순수하게 일렬인 사슬이면 위에서 아래로 간다.
 
-Do NOT close or modify any parent issue.
+부모 이슈를 닫거나 수정하지 **않는다**.
 
 <local-ticket-template>
 
-# <NN>: <Ticket title>
+# <NN>: <티켓 제목>
 
-**What to build:** the end-to-end behaviour this ticket makes work, from the user's perspective, not a layer-by-layer implementation list.
+**What to build:** 이 티켓이 동작하게 만드는 end-to-end 동작. 층별 구현 목록이 아니라 사용자의 관점에서 쓴다.
 
-**Blocked by:** the numbers/titles of the tickets that gate this one, or "None (can start immediately)".
+**Blocked by:** 이 티켓을 막는 티켓의 번호/제목, 또는 "None (can start immediately)".
 
 **Status:** ready-for-agent
 
-- [ ] Acceptance criterion 1
-- [ ] Acceptance criterion 2
+- [ ] 인수 기준 1
+- [ ] 인수 기준 2
 
 </local-ticket-template>
 
@@ -85,21 +85,21 @@ Do NOT close or modify any parent issue.
 
 ## Parent
 
-A reference to the parent issue on the tracker (if the source was an existing issue, otherwise omit this section).
+트래커 위의 부모 이슈 참조(출처가 기존 이슈였을 때만. 아니면 이 절을 생략한다).
 
 ## What to build
 
-The end-to-end behaviour this ticket makes work, from the user's perspective, not layer-by-layer implementation.
+이 티켓이 동작하게 만드는 end-to-end 동작. 층별 구현 목록이 아니라 사용자의 관점에서 쓴다.
 
 ## Acceptance criteria
 
-- [ ] Criterion 1
-- [ ] Criterion 2
+- [ ] 기준 1
+- [ ] 기준 2
 
 ## Blocked by
 
-- A reference to each blocking ticket, or "None (can start immediately)". Omit this section when blockers were set as native edges.
+- 막는 티켓 각각에 대한 참조, 또는 "None (can start immediately)". 막는 관계를 네이티브 관계로 설정했다면 이 절을 생략한다.
 
 </issue-template>
 
-In either form, avoid specific file paths or code snippets: they go stale fast. Exception: if a prototype produced a snippet that encodes a decision more precisely than prose can (state machine, reducer, schema, type shape), inline it and note briefly that it came from a prototype. Trim to the decision-rich parts, not a working demo, just the important bits.
+어느 형태든 구체적인 파일 경로나 코드 스니펫은 피한다. 금방 낡는다. 예외: 프로토타입이 만든 스니펫이 산문보다 결정을 더 정확히 담고 있으면(상태 머신, 리듀서, 스키마, 타입 모양) 인라인하고, 프로토타입에서 나왔다고 짧게 적는다. 동작하는 데모가 아니라 결정이 담긴 부분만 추려서, 중요한 대목만 남긴다.

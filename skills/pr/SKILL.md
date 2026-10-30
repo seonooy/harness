@@ -1,6 +1,6 @@
 ---
 name: pr
-description: "Use when writing a PR body."
+description: "PR 본문을 쓸 때 쓴다."
 metadata:
   credits:
     skill: show-me
@@ -9,38 +9,38 @@ metadata:
     url: "https://github.com/humanlayer/skills/blob/main/plugins/show-me/skills/show-me/SKILL.md"
 ---
 
-Use this template for writing the PR body:
+PR 본문은 이 템플릿으로 쓴다:
 
 ```markdown
 ## Summary
 
-<diagram, diff-sketch, or tree>
+<다이어그램, diff 스케치, 또는 트리>
 
 ## Evidence
 
-- **Before:** <screenshot/output/failing test run>
-  **After:** <screenshot/output/passing test run>
+- **Before:** <스크린샷/출력/실패한 테스트 실행>
+  **After:** <스크린샷/출력/통과한 테스트 실행>
 
 ## Merge Danger
 
-**Door:** <one-way or two-way>
+**Door:** <one-way 또는 two-way>
 
-<optional: description>
+<선택: 설명>
 
-**Blast Radius:** <one-word description>
+**Blast Radius:** <한 단어 설명>
 
-<optional: potential ramifications of merge>
+<선택: 머지로 생길 수 있는 파급 효과>
 ```
 
-## Sections
+## 절
 
-Skip all preambles and keep prose brief. Use the user's domain language from `GLOSSARY.md`.
+서두는 모두 건너뛰고 글은 짧게 쓴다. `GLOSSARY.md`에 있는 사용자의 도메인 언어를 쓴다.
 
-### Summary
+### 요약 (Summary)
 
-Pick the smallest view that makes the key point clear.
+핵심을 분명히 보여 주는 가장 작은 뷰를 고른다.
 
-- Show logic or an algorithm as pseudocode:
+- 로직이나 알고리즘은 의사코드로 보여 준다:
 
 ```text
 on(save)
@@ -50,7 +50,7 @@ on(save)
   return fresh result
 ```
 
-- Show runtime control flow as a call tree:
+- 실행 시점의 제어 흐름은 호출 트리로 보여 준다:
 
 ```text
 submitForm
@@ -60,7 +60,7 @@ submitForm
   navigateToSession
 ```
 
-- Show UI structure as a component tree, including state and module boundaries that matter:
+- UI 구조는 컴포넌트 트리로 보여 주되, 중요한 상태와 모듈 경계를 포함한다:
 
 ```text
 <SessionPage> (apps/example/src/routes/session.tsx)
@@ -69,16 +69,16 @@ submitForm
     <RunSkillButton> (packages/ui)
 ```
 
-- Show file responsibility or a broad refactor as a shallow file tree:
+- 파일별 책임이나 넓은 리팩터링은 얕은 파일 트리로 보여 준다:
 
 ```text
 src/
-├── commands/       # parses user actions
-├── sessions/       # owns session state
-└── transport/      # sends API requests
+├── commands/       # 사용자 동작을 파싱한다
+├── sessions/       # 세션 상태를 소유한다
+└── transport/      # API 요청을 보낸다
 ```
 
-- Show component interaction, control flow, or data flow with Mermaid:
+- 컴포넌트 간 상호작용, 제어 흐름, 데이터 흐름은 Mermaid로 보여 준다:
 
 ```mermaid
 sequenceDiagram
@@ -90,9 +90,9 @@ sequenceDiagram
     Daemon-->>UI: stream result
 ```
 
-- Use `diff` when the point is what changes and the surrounding shape already exists. Match the diff shape to the topic.
+- 무엇이 바뀌는지가 요점이고 주변 모양이 이미 있을 때는 `diff`를 쓴다. diff의 모양을 주제에 맞춘다.
 
-For a component change:
+컴포넌트가 바뀔 때:
 
 ```diff
  <SessionPage>
@@ -103,12 +103,12 @@ For a component change:
 +    <SkillResultCard />
 ```
 
-For a file-layout change:
+파일 배치가 바뀔 때:
 
 ```diff
  src/
  ├── commands/
-+│   └── show-me.ts       # expands the slash command
++│   └── show-me.ts       # 슬래시 명령을 펼친다
  ├── sessions/
 -└── transport.ts
 +└── transport/
@@ -116,7 +116,7 @@ For a file-layout change:
 +    └── stream.ts
 ```
 
-For a call-tree or call-stack change:
+호출 트리나 호출 스택이 바뀔 때:
 
 ```diff
  submitForm
@@ -129,7 +129,7 @@ For a call-tree or call-stack change:
 +    subscribeToEvents
 ```
 
-For a state or control-flow change:
+상태나 제어 흐름이 바뀔 때:
 
 ```diff
  on(save)
@@ -140,7 +140,7 @@ For a state or control-flow change:
 +  invalidate cache
 ```
 
-- Show the whole block when most of it is new, when omitted context would hide ownership or order, or when the user needs a copyable target shape:
+- 대부분이 새 코드이거나, 생략한 맥락 때문에 소유 관계나 순서가 가려지거나, 사용자가 복사해 쓸 목표 모양이 필요할 때는 블록 전체를 보여 준다:
 
 ```ts
 function expandSkill(command: string): string {
@@ -149,22 +149,22 @@ function expandSkill(command: string): string {
 }
 ```
 
-#### Guidance
+#### 지침
 
-Place each visual next to the short text it supports. Keep only the calls, files, props, states, and boundaries needed to answer the user's current question or the options to resolve the current discussion point.
+각 시각 자료는 그것이 뒷받침하는 짧은 글 바로 옆에 둔다. 사용자의 현재 질문에 답하거나 현재 논의 지점을 풀 선택지를 보이는 데 필요한 호출, 파일, props, 상태, 경계만 남긴다.
 
-You may use one of these, you may use several, it is unlikely you will use all of them. Use your judgement and don't overwhelm the user.
+이 중 하나를 쓸 수도, 여러 개를 쓸 수도 있다. 모두 쓰게 될 가능성은 낮다. 판단해서 쓰고 사용자를 압도하지 않는다.
 
-### Evidence
+### 근거 (Evidence)
 
-Concrete evidence that the change works. Show a before and after.
+변경이 동작한다는 구체적인 근거. 전과 후를 보여 준다.
 
-Screenshots are S-tier - when the environment is set up for it and the change is visual.
+스크린샷은 S등급이다. 환경이 갖춰져 있고 변경이 시각적일 때 해당한다.
 
-Execution-based evidence is A-tier. Test results, console output. Show the exact test that now fails and passes, using pseudocode.
+실행 기반 근거는 A등급이다. 테스트 결과, 콘솔 출력이 해당한다. 이전에는 실패하고 지금은 통과하는 바로 그 테스트를 의사코드로 보여 준다.
 
-### Merge Danger
+### 머지 위험 (Merge Danger)
 
-Describe whether it's a one-way or two-way door. You can walk back through two-way doors, but not one-way doors. A PR that is cheap to roll back is lower risk. Changes that involve destructive actions or hard-to-reverse decisions are one-way doors.
+one-way door인지 two-way door인지 적는다. two-way door는 되돌아 나올 수 있지만 one-way door는 그럴 수 없다. 롤백 비용이 낮은 PR은 위험이 더 낮다. 파괴적인 동작이나 되돌리기 어려운 결정이 들어간 변경은 one-way door다.
 
-The blast radius is the potential impact or scope of the changes introduced by this PR. Consider all possibilities. Examples are layout shift, breakages for consumers, mobile responsiveness, etc.
+blast radius는 이 PR이 들여오는 변경이 미칠 수 있는 영향 또는 범위다. 가능한 경우를 모두 고려한다. 예: 레이아웃 이동, 소비자 쪽 깨짐, 모바일 반응성 등.

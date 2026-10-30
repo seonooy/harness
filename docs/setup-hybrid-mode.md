@@ -1,51 +1,46 @@
 # Setup: Hybrid Mode
 
-Use this mode when the project needs both shared GitHub Issue workflow and a
-private local `.ai` issue tracker.
+프로젝트에 공유 GitHub Issue 워크플로와 비공개 로컬 `.ai` issue 트래커가 모두 필요할 때 이 모드를
+쓴다.
 
-## Intended Split
+## 역할 나눔
 
-- GitHub Issues: shared implementation work, PR tracking, collaborator-visible
-  bugs/features.
-- Local `.ai/issues/`: private planning, spikes, agent coordination, personal
-  queues, and unshared experiment notes.
+- GitHub Issues: 공유하는 구현 작업, PR 추적, 협업자에게 보이는 버그·기능.
+- 로컬 `.ai/issues/`: 비공개 계획, spike, 에이전트 조율, 개인 작업 대기열, 공유하지 않는 실험 노트.
 
-## Install Steps
+## 설치 절차
 
-1. Read `docs/target-project-checklist.md`.
-2. Follow `docs/setup-github-issue-mode.md` for common files and `.github/`.
-3. Follow `docs/setup-local-ai-mode.md` for `.ai/tasks.md`, `.ai/issues/`, and
-   `.git/info/exclude`.
-4. Write explicit precedence rules in target `AGENTS.md`.
-5. If a local issue becomes shared implementation work, create or link a GitHub
-   Issue and record that link in the local issue file.
+1. `docs/target-project-checklist.md`를 읽는다.
+2. 공통 파일과 `.github/`는 `docs/setup-github-issue-mode.md`를 따른다.
+3. `.ai/tasks.md`, `.ai/issues/`, `.git/info/exclude`는 `docs/setup-local-ai-mode.md`를 따른다.
+4. 대상 `AGENTS.md`에 우선순위 규칙을 명시해서 쓴다.
+5. 로컬 issue가 공유할 구현 작업이 되면 GitHub Issue를 만들거나 연결하고, 그 링크를 로컬 issue
+   파일에 기록한다.
 
-## Target AGENTS.md Task Source Section
+## 대상 AGENTS.md의 작업 출처 절
 
-Use language like this, adjusted to the project:
+프로젝트에 맞게 고쳐서 이런 식으로 쓴다:
 
 ```md
-## Task Source
+## 작업 출처
 
-This project uses Hybrid mode.
+이 프로젝트는 Hybrid mode를 쓴다.
 
-Shared source of truth:
-- GitHub Issues and PRs are authoritative for work that will be shared with
-  collaborators or merged through remote PRs.
+공유 기준 출처:
+- 협업자와 공유하거나 원격 PR로 병합할 작업은 GitHub Issues와 PR이 기준이다.
 
-Local source of truth:
-- `.ai/tasks.md` and `.ai/issues/*.md` are private planning and agent workflow
-  records. They are excluded through `.git/info/exclude`.
+로컬 기준 출처:
+- `.ai/tasks.md`와 `.ai/issues/*.md`는 비공개 계획과 에이전트 워크플로 기록이다.
+  `.git/info/exclude`로 git에서 제외한다.
 
-Precedence:
-- If a GitHub Issue and local `.ai` issue conflict, ask before implementing.
-- If the work will affect shared code, prefer or create a GitHub Issue before
-  opening a PR.
-- Local `.ai` issues may track spikes, decomposition, or private next actions
-  that are not ready for GitHub.
+우선순위:
+- GitHub Issue와 로컬 `.ai` issue가 충돌하면 구현하기 전에 묻는다.
+- 작업이 공유 코드에 영향을 주면 PR을 열기 전에 GitHub Issue를 우선하거나 만든다.
+- 로컬 `.ai` issue는 spike, 작업 쪼개기, 아직 GitHub에 올릴 단계가 아닌 개인 다음 행동을 추적할 수
+  있다.
 ```
 
-## Future Prompt Examples
+## 이후 프롬프트 예시
 
 ```text
 AGENTS.md 따라 hybrid mode로 시작해줘. GitHub 이슈랑 .ai/tasks 둘 다 보고 충돌 있으면 알려줘.
@@ -55,17 +50,17 @@ AGENTS.md 따라 hybrid mode로 시작해줘. GitHub 이슈랑 .ai/tasks 둘 다
 .ai/issues/0002 내용을 GitHub Issue로 승격할지 판단해줘.
 ```
 
-## Verification
+## 검증
 
-After setup, run:
+셋업이 끝나면 실행한다:
 
 ```bash
 find .ai .github -maxdepth 3 -type f | sort
 git status --short -- AGENTS.md .ai .github
 ```
 
-Expected:
-- GitHub templates exist;
-- local `.ai/tasks.md` and `.ai/issues/` exist;
-- a manual scan of generated files finds no leftover setup placeholders;
-- local-only files are excluded if that is the selected policy.
+기대 결과:
+- GitHub 템플릿이 있다.
+- 로컬 `.ai/tasks.md`와 `.ai/issues/`가 있다.
+- 생성한 파일을 직접 훑어봐도 남은 셋업 자리표시자가 없다.
+- 로컬 전용 파일은, 그 정책을 골랐다면 제외돼 있다.

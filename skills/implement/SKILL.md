@@ -1,17 +1,17 @@
 ---
 name: implement
-description: "Implement a piece of work based on a spec or set of tickets."
+description: "명세나 티켓 묶음에 따라 작업을 구현한다."
 disable-model-invocation: true
 ---
 
-Implement the work described by the user in the spec or tickets.
+사용자가 명세나 티켓으로 설명한 작업을 구현한다.
 
-If the user passes a ticket reference, fetch it from the issue tracker and state its title before starting. If the reference is ambiguous, ask.
+사용자가 티켓 참조를 주면 이슈 트래커에서 가져오고, 시작하기 전에 그 제목을 말한다. 참조가 모호하면 묻는다.
 
-open the `tdd` skill where possible, at pre-agreed seams.
+가능하면 미리 합의한 seam에서 `tdd` 스킬을 연다.
 
-Run typechecking regularly, single test files regularly, and the full test suite once at the end.
+타입 검사는 자주, 테스트 파일 단위 실행도 자주 하고, 전체 테스트 스위트는 끝에 한 번 돌린다.
 
-Once done, open the `code-review` skill to review the work.
+끝나면 `code-review` 스킬을 열어 작업을 리뷰한다.
 
-Commit your work to the current branch.
+작업을 현재 브랜치에 커밋한다.

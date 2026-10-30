@@ -1,5 +1,5 @@
 interface:
   display_name: "Wait What"
-  short_description: "Re-pitch that: simpler, with the context I'm missing"
+  short_description: "다시 설명해 줘: 더 단순하게, 내가 모르는 맥락을 채워서"
 policy:
   allow_implicit_invocation: false

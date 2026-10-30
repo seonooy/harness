@@ -1,23 +1,23 @@
-# PR Ready Checklist
+# PR 준비 체크리스트
 
-Use this before pushing or opening a PR.
+push하거나 PR을 열기 전에 쓴다.
 
-- [ ] Task record scope is satisfied.
-- [ ] Acceptance Criteria are satisfied.
-- [ ] Ownership was respected.
-- [ ] No unrelated files changed.
-- [ ] Verification ran, or the limitation is documented.
-- [ ] PR template is complete.
-- [ ] Numbered steps, task links, and review notes are in ascending order.
-- [ ] Agent Notes are short, or `None` if there is no agent-specific context.
-- [ ] Follow-up work is listed in Notes or a new task candidate.
-- [ ] No secrets, `.env` values, or local-only paths were committed outside Agent Notes.
+- [ ] 작업 기록의 범위를 충족했다.
+- [ ] Acceptance Criteria를 충족했다.
+- [ ] Ownership을 지켰다.
+- [ ] 관련 없는 파일을 바꾸지 않았다.
+- [ ] 검증을 돌렸거나, 못 돌린 한계를 적었다.
+- [ ] PR 템플릿을 모두 채웠다.
+- [ ] 번호를 매긴 단계, 작업 링크, 리뷰 노트가 오름차순이다.
+- [ ] Agent Notes는 짧거나, 에이전트 고유의 맥락이 없으면 `None`이다.
+- [ ] 후속 작업은 Notes나 새 작업 후보에 적었다.
+- [ ] 시크릿, `.env` 값, 로컬 전용 경로가 Agent Notes 밖에서 커밋되지 않았다.
 
-## After PR Opened
+## PR을 연 뒤
 
-- [ ] PR targets the intended base branch and links the task record when applicable.
-- [ ] `gh pr checks` or GitHub UI shows required checks completed or pending.
-- [ ] CodeRabbit review was checked when enabled.
-- [ ] Codex review was checked when enabled, or requested with `@codex review`.
-- [ ] Automated review findings were fixed or explicitly deferred.
-- [ ] Agent-specific follow-ups are in Agent Notes only when not already covered elsewhere.
+- [ ] PR이 의도한 기준 브랜치를 향하고, 해당하면 작업 기록을 연결했다.
+- [ ] `gh pr checks`나 GitHub UI에서 필수 check가 끝났거나 진행 중으로 보인다.
+- [ ] CodeRabbit이 켜져 있으면 그 리뷰를 확인했다.
+- [ ] Codex가 켜져 있으면 그 리뷰를 확인했거나 `@codex review`로 요청했다.
+- [ ] 자동 리뷰 지적을 고쳤거나 명시적으로 미뤘다.
+- [ ] 에이전트 고유의 후속 작업은, 다른 곳에 아직 없을 때만 Agent Notes에 있다.

@@ -31,14 +31,13 @@ git clone https://github.com/seonooy/harness && bash harness/install.sh && codex
 
 # Agent Harness Template
 
-Agent-readable setup kit for adding a project-specific development harness to a
-repository. This is not a script and not a placeholder-only template. It is a
-set of guides and source files that Codex can read, adapt, and install
-inside another project.
+저장소에 프로젝트에 맞는 개발 하네스를 더하는, 에이전트가 읽는 셋업 키트다. 스크립트도 아니고
+자리표시자만 있는 템플릿도 아니다. Codex가 다른 프로젝트 안에서 읽고, 고치고, 설치할 수 있는
+안내와 원본 파일 묶음이다.
 
-## How To Use From A Target Project
+## 대상 프로젝트에서 쓰는 법
 
-Open Codex in the target project, then say one of:
+대상 프로젝트에서 Codex를 열고 다음 중 하나를 말한다:
 
 ```text
 ~/h 보고 이 프로젝트에 agent harness 셋업해줘.
@@ -60,9 +59,8 @@ Open Codex in the target project, then say one of:
 ~/h 보고 python·ddd, 개인 배치로 셋업하고 켜줘.
 ```
 
-The agent should inspect the target project, choose or confirm a mode, copy the
-right files, and write a finished `AGENTS.md` for that project. It should not
-leave placeholder text behind.
+에이전트는 대상 프로젝트를 조사하고, 모드를 고르거나 확인하고, 알맞은 파일을 복사하고, 그
+프로젝트에 맞는 완성된 `AGENTS.md`를 써야 한다. 자리표시자 텍스트를 남기면 안 된다.
 
 ## 검사 키트
 
@@ -93,48 +91,44 @@ kit-change로 <작업> 해줘.
 kit-verify로 지금 diff 검증해줘.
 ```
 
-## Modes
+## 모드
 
 ### GitHub Issue Mode
 
-Use when tasks should be shared through GitHub Issues and landed through PRs.
+작업을 GitHub Issues로 공유하고 PR로 반영해야 할 때 쓴다.
 
-Installs:
-- common `.ai/agents/` and `.ai/rules/`
+설치되는 것:
+- 공통 `.ai/agents/`와 `.ai/rules/`
 - `.github/ISSUE_TEMPLATE/agent_task.md`
 - `.github/pull_request_template.md`
-- project-specific `AGENTS.md`
+- 프로젝트별 `AGENTS.md`
 
-Source of truth: GitHub Issue + PR.
+기준 출처: GitHub Issue + PR.
 
 ### Local AI Issue Mode
 
-Use when the harness is personal/local and should not be committed to the team
-repo.
+하네스가 개인·로컬용이라 팀 저장소에 커밋하지 않을 때 쓴다.
 
-Installs:
-- common `.ai/agents/` and `.ai/rules/`
+설치되는 것:
+- 공통 `.ai/agents/`와 `.ai/rules/`
 - `.ai/tasks.md`
 - `.ai/issues/0000-issue-template.md`
-- project-specific `AGENTS.md`
-- `.git/info/exclude` entries for local-only files
+- 프로젝트별 `AGENTS.md`
+- 로컬 전용 파일을 위한 `.git/info/exclude` 항목
 
-Source of truth: `.ai/tasks.md` + `.ai/issues/*.md`.
+기준 출처: `.ai/tasks.md` + `.ai/issues/*.md`.
 
 ### Hybrid Mode
 
-Use when shared work needs GitHub Issues/PRs but personal agent planning should
-stay local.
+공유 작업에는 GitHub Issues/PR이 필요하지만 개인 에이전트 계획은 로컬에 두어야 할 때 쓴다.
 
-Installs both GitHub and local `.ai` issue pieces, then writes explicit
-precedence rules in `AGENTS.md`.
+GitHub와 로컬 `.ai` issue 조각을 모두 설치한 뒤, `AGENTS.md`에 우선순위 규칙을 명시해서 쓴다.
 
-Source of truth:
-- GitHub Issues for shared implementation and PR tracking.
-- Local `.ai/issues/` for private planning, spikes, personal queues, and
-  unshared agent coordination.
+기준 출처:
+- 공유하는 구현과 PR 추적은 GitHub Issues.
+- 비공개 계획, spike, 개인 대기열, 공유하지 않는 에이전트 조율은 로컬 `.ai/issues/`.
 
-## Directory Map
+## 디렉터리 지도
 
 ```text
 agent-harness-template/
@@ -166,37 +160,37 @@ agent-harness-template/
     └── project/                 intent.md, 검증 지도, 변경 규칙
 ```
 
-## Setup Agent Contract
+## 셋업 에이전트 규약
 
-The setup agent must:
-- inspect the target repo before writing;
-- preserve existing project instructions;
-- write concrete commands and paths into the target `AGENTS.md`;
-- choose only one task source by default, unless Hybrid mode is requested;
-- update `.git/info/exclude` for local-only mode;
-- report changed files and next prompt examples.
+셋업 에이전트는 다음을 해야 한다:
+- 쓰기 전에 대상 저장소를 조사한다.
+- 기존 프로젝트 지침을 보존한다.
+- 대상 `AGENTS.md`에 구체적인 명령과 경로를 쓴다.
+- Hybrid mode를 요청받지 않았다면 기본으로 작업 출처 하나만 고른다.
+- 로컬 전용 모드면 `.git/info/exclude`를 고친다.
+- 바뀐 파일과 다음 프롬프트 예시를 보고한다.
 
-## After Setup
+## 셋업 뒤
 
-In the target project, start future sessions with:
+대상 프로젝트에서 이후 세션은 이렇게 시작한다:
 
 ```text
 AGENTS.md 따라 시작해줘.
 ```
 
-For Local AI Issue mode:
+Local AI Issue mode면:
 
 ```text
 AGENTS.md 따라 .ai/tasks.md 읽고 다음 작업 후보 보여줘.
 ```
 
-For a specific local issue:
+특정 로컬 issue를 진행하려면:
 
 ```text
 AGENTS.md 따라 .ai/issues/0001-example.md 진행해줘.
 ```
 
-For GitHub Issue mode:
+GitHub Issue mode면:
 
 ```text
 AGENTS.md 따라 GitHub Issue #123 진행해줘.

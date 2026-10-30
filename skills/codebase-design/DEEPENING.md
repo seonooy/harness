@@ -1,37 +1,37 @@
-# Deepening
+# 깊게 만들기 (Deepening)
 
-How to deepen a cluster of shallow modules safely, given its dependencies. Assumes the vocabulary in [SKILL.md](SKILL.md): **module**, **interface**, **seam**, **adapter**.
+얕은 모듈 클러스터를 그 의존성을 고려해 안전하게 깊게 만드는 방법이다. [SKILL.md](SKILL.md)의 용어를 전제한다: **모듈**, **인터페이스**, **seam**, **어댑터**.
 
-## Dependency categories
+## 의존성 범주
 
-When assessing a candidate for deepening, classify its dependencies. The category determines how the deepened module is tested across its seam.
+deepening 후보를 평가할 때 그 의존성을 분류한다. 범주에 따라, 깊어진 모듈을 seam 너머에서 어떻게 테스트할지가 정해진다.
 
-### 1. In-process
+### 1. 프로세스 내부 (In-process)
 
-Pure computation, in-memory state, no I/O. Always deepenable: merge the modules and test through the new interface directly. No adapter needed.
+순수 계산, 메모리 안의 상태, I/O 없음. 언제나 깊게 만들 수 있다. 모듈을 합치고 새 인터페이스로 곧바로 테스트한다. 어댑터는 필요 없다.
 
-### 2. Local-substitutable
+### 2. 로컬에서 대체 가능 (Local-substitutable)
 
-Dependencies that have local test stand-ins (PGLite for Postgres, in-memory filesystem). Deepenable if the stand-in exists. The deepened module is tested with the stand-in running in the test suite. The seam is internal; no port at the module's external interface.
+로컬 테스트 대역(stand-in)이 있는 의존성(Postgres 대신 PGLite, 인메모리 파일시스템). 대역이 있으면 깊게 만들 수 있다. 깊어진 모듈은 테스트 스위트 안에서 대역을 돌려 테스트한다. seam은 내부에 있고, 모듈의 외부 인터페이스에는 포트(port)가 없다.
 
-### 3. Remote but owned (Ports & Adapters)
+### 3. 원격이지만 직접 소유 (Remote but owned, Ports & Adapters)
 
-Your own services across a network boundary (microservices, internal APIs). Define a **port** (interface) at the seam. The deep module owns the logic; the transport is injected as an **adapter**. Tests use an in-memory adapter. Production uses an HTTP/gRPC/queue adapter.
+네트워크 너머에 있는 직접 만든 서비스(마이크로서비스, 내부 API). seam에 **포트(port)**(인터페이스)를 정의한다. deep module이 로직을 소유하고, 전송 수단은 **어댑터**로 주입한다. 테스트는 인메모리 어댑터를 쓴다. 운영은 HTTP/gRPC/큐 어댑터를 쓴다.
 
-Recommendation shape: *"Define a port at the seam, implement an HTTP adapter for production and an in-memory adapter for testing, so the logic sits in one deep module even though it's deployed across a network."*
+권고 형식: *"seam에 포트를 정의하고, 운영용 HTTP 어댑터와 테스트용 인메모리 어댑터를 구현한다. 그러면 네트워크 너머에 배포되더라도 로직은 하나의 deep module에 있게 된다."*
 
-### 4. True external (Mock)
+### 4. 완전한 외부 (True external, Mock)
 
-Third-party services (Stripe, Twilio, etc.) you don't control. The deepened module takes the external dependency as an injected port; tests provide a mock adapter.
+직접 통제하지 못하는 서드파티 서비스(Stripe, Twilio 등). 깊어진 모듈은 외부 의존성을 주입받는 포트로 받고, 테스트는 mock 어댑터를 제공한다.
 
-## Seam discipline
+## seam 규율
 
-- **One adapter means a hypothetical seam. Two adapters means a real one.** Don't introduce a port unless at least two adapters are justified (typically production + test). A single-adapter seam is just indirection.
-- **Internal seams vs external seams.** A deep module can have internal seams (private to its implementation, used by its own tests) as well as the external seam at its interface. Don't expose internal seams through the interface just because tests use them.
+- **어댑터가 하나면 가상의 seam이고, 둘이면 진짜 seam이다.** 어댑터를 둘 이상 정당화할 수 있을 때(보통 운영 + 테스트)만 포트를 도입한다. 어댑터가 하나뿐인 seam은 그저 간접 계층(indirection)이다.
+- **내부 seam과 외부 seam.** deep module은 인터페이스에 있는 외부 seam 외에, 구현 안쪽에 있고 자체 테스트가 쓰는 내부 seam도 가질 수 있다. 테스트가 쓴다는 이유만으로 내부 seam을 인터페이스로 노출하지 않는다.
 
-## Testing strategy: replace, don't layer
+## 테스트 전략: 겹쳐 쌓지 말고 교체한다
 
-- Old unit tests on shallow modules become waste once tests at the deepened module's interface exist; delete them.
-- Write new tests at the deepened module's interface. The **interface is the test surface**.
-- Tests assert on observable outcomes through the interface, not internal state.
-- Tests should survive internal refactors, since they describe behaviour, not implementation. If a test has to change when the implementation changes, it's testing past the interface.
+- 얕은 모듈에 달린 옛 단위 테스트는, 깊어진 모듈의 인터페이스에 테스트가 생기고 나면 쓸모없어진다. 지운다.
+- 새 테스트는 깊어진 모듈의 인터페이스에서 쓴다. **인터페이스가 곧 테스트 표면이다.**
+- 테스트는 내부 상태가 아니라 인터페이스로 관찰되는 결과를 단언한다.
+- 테스트는 내부 리팩터링에서 살아남아야 한다. 구현이 아니라 동작을 기술하기 때문이다. 구현이 바뀔 때 테스트도 바꿔야 한다면 인터페이스 너머를 테스트하고 있는 것이다.

@@ -1,22 +1,22 @@
-# Skill mechanics
+# 스킬 메커니즘 (Skill mechanics)
 
-The skill-specific branch of [`writing-for-agents`](SKILL.md): what changes when the document is a skill (frontmatter, the invocation choice, and router skills). Everything else about writing it is the universal reference in `SKILL.md`.
+[`writing-for-agents`](SKILL.md)의 스킬 전용 갈래(branch)다. 문서가 스킬일 때 달라지는 것(프런트매터, 호출 방식 선택, 라우터 스킬)을 다룬다. 글쓰기에 관한 나머지는 모두 `SKILL.md`의 공통 참고 자료에 있다.
 
-## Invocation
+## 호출 방식
 
-Two choices, trading the two loads:
+두 가지 선택이 있고, 두 부하(load)를 맞바꾼다:
 
-- A **model-invoked** skill keeps a `description`, so the agent can fire it autonomously, and other skills can reach it. You can still type its name: model-invocation always _includes_ user reach; a description only ever adds agent discovery, never removes the human's. The description is the skill's top-level context pointer, forced to stay loaded at all times: permanent context load in exchange for discoverability. A model-invoked skill whose content is all reference is also one home for shared reference: another skill can invoke it, so reference needed by several skills lives in one place. Mechanics: omit `disable-model-invocation`, and write a model-facing description carrying the trigger branches (the pointer-writing rules in `SKILL.md` apply in full).
-- A **user-invoked** skill strips the description from the agent's reach: only the human typing its name can invoke it, and no other skill can. Zero context load, but it spends cognitive load: you are the index that must remember it exists. Mechanics: set `disable-model-invocation: true`; the `description` becomes human-facing: a one-line summary, trigger lists stripped.
+- **모델이 호출하는(model-invoked)** 스킬은 `description`을 유지한다. 그래서 에이전트가 스스로 실행할 수 있고, 다른 스킬도 이 스킬에 닿을 수 있다. 사람이 이름을 입력해 부르는 것도 여전히 된다. 모델 호출은 사용자 호출을 언제나 _포함한다_. description은 에이전트가 찾아낼 수 있게 보태기만 할 뿐, 사람의 접근을 없애지 않는다. description은 그 스킬의 최상위 컨텍스트 포인터(context pointer)이고, 항상 로드된 채로 있어야 한다. 곧 찾을 수 있게 하는 대가로 컨텍스트 부하(context load)를 계속 치른다. 내용이 전부 참고 자료(reference)인 모델 호출 스킬은 공유 참고 자료를 두는 한 곳이 되기도 한다. 다른 스킬이 이 스킬을 호출할 수 있으므로, 여러 스킬이 필요로 하는 참고 자료가 한곳에 놓인다. 방법: `disable-model-invocation`을 생략하고, 트리거 갈래를 담은 모델용 description을 쓴다(`SKILL.md`의 포인터 작성 규칙이 그대로 적용된다).
+- **사용자가 호출하는(user-invoked)** 스킬은 description을 에이전트가 닿을 수 없는 곳으로 치운다. 사람이 이름을 입력해야만 호출되고, 다른 어떤 스킬도 호출할 수 없다. 컨텍스트 부하는 0이지만 인지 부하(cognitive load)를 쓴다. 사람이 곧 색인(index)이라 이 스킬이 있다는 것을 기억해야 한다. 방법: `disable-model-invocation: true`를 설정한다. `description`은 사람을 위한 것이 되어 한 줄 요약만 남기고 트리거 목록은 뺀다.
 
-Pick model-invocation only when the agent must reach the skill on its own, or another skill must. If it only ever fires by hand, make it user-invoked and pay no context load.
+에이전트가 스스로 이 스킬에 닿아야 하거나 다른 스킬이 닿아야 할 때만 모델 호출을 고른다. 손으로만 실행되는 스킬이면 사용자 호출로 만들어 컨텍스트 부하를 치르지 않는다.
 
-Shared reference that two user-invoked skills both need can live in neither: with no descriptions, neither can fire the other. Push it to a plain file outside the skill system: external reference any skill can point at.
+사용자 호출 스킬 두 개가 함께 필요로 하는 공유 참고 자료는 어느 쪽에도 둘 수 없다. description이 없어서 서로를 실행할 수 없기 때문이다. 스킬 체계 밖의 일반 파일로 뺀다. 어느 스킬이든 가리킬 수 있는 외부 참고 자료가 된다.
 
-## Splitting by invocation
+## 호출 방식으로 나누기
 
-The invocation cut of splitting (the sequence cut lives in `SKILL.md`): split off a model-invoked skill when you have a distinct leading word that should trigger it on its own (a trigger word you actually use in your prompts), or another skill must reach it. You pay context load for the new always-loaded description, so that independent reach has to be worth it.
+나누기 중 호출 방식에 따른 절단이다(순서에 따른 절단은 `SKILL.md`에 있다). 단독으로 그 스킬을 발동시켜야 할 뚜렷한 리딩 워드(leading word)(프롬프트에서 실제로 쓰는 트리거 단어)가 있거나 다른 스킬이 닿아야 할 때 모델 호출 스킬을 따로 떼어 낸다. 새로 항상 로드되는 description 때문에 컨텍스트 부하를 치르므로, 그렇게 독립적으로 닿을 수 있다는 이점이 그만한 값어치가 있어야 한다.
 
-## Router skills
+## 라우터 스킬
 
-When user-invoked skills multiply past what you can remember, that piled-up cognitive load is cured by a **router skill**: one user-invoked skill that names the others and when to reach for each, so the human has one skill to remember instead of many. It can only hint, never fire them: user-invoked skills have no description, so nothing but the human can reach them.
+사용자 호출 스킬이 기억할 수 있는 수를 넘어 늘어나면, 쌓인 인지 부하는 **라우터 스킬(router skill)**로 푼다. 사용자 호출 스킬 하나가 다른 스킬들의 이름과 각각을 언제 부를지를 알려 줘서, 사람이 여러 스킬 대신 스킬 하나만 기억하면 된다. 라우터는 힌트만 줄 수 있고 다른 스킬을 실행하지는 못한다. 사용자 호출 스킬에는 description이 없어서 사람 말고는 아무것도 그 스킬에 닿을 수 없기 때문이다.

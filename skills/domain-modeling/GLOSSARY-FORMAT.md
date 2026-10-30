@@ -1,60 +1,60 @@
-# GLOSSARY.md Format
+# GLOSSARY.md 형식
 
-## Structure
+## 구조
 
 ```md
-# {Context Name}
+# {컨텍스트 이름}
 
-{One or two sentence description of what this context is and why it exists.}
+{이 컨텍스트가 무엇이고 왜 있는지 한두 문장으로 설명한다.}
 
 ## Language
 
 **Order**:
-{A one or two sentence description of the term}
+{용어에 대한 한두 문장 설명}
 _Avoid_: Purchase, transaction
 
 **Invoice**:
-A request for payment sent to a customer after delivery.
+배송 후 고객에게 보내는 결제 요청.
 _Avoid_: Bill, payment request
 
 **Customer**:
-A person or organization that places orders.
+주문을 하는 사람 또는 조직.
 _Avoid_: Client, buyer, account
 ```
 
-## Rules
+## 규칙
 
-- **Be opinionated.** When multiple words exist for the same concept, pick the best one and list the others under `_Avoid_`.
-- **Keep definitions tight.** One or two sentences max. Define what it IS, not what it does.
-- **Only include terms specific to this project's context.** General programming concepts (timeouts, error types, utility patterns) don't belong even if the project uses them extensively. Before adding a term, ask: is this a concept unique to this context, or a general programming concept? Only the former belongs.
-- **Group terms under subheadings** when natural clusters emerge. If all terms belong to a single cohesive area, a flat list is fine.
+- **입장을 분명히 한다.** 같은 개념에 단어가 여럿이면 가장 좋은 하나를 고르고, 나머지는 `_Avoid_` 아래에 적는다.
+- **정의를 짧게 쓴다.** 최대 한두 문장이다. 그것이 무엇을 하는지가 아니라 무엇*인지*를 정의한다.
+- **이 프로젝트의 컨텍스트에 특화된 용어만 넣는다.** 일반적인 프로그래밍 개념(타임아웃, 오류 유형, 유틸리티 패턴)은 프로젝트가 아무리 많이 쓰더라도 넣지 않는다. 용어를 추가하기 전에 묻는다. 이 컨텍스트에만 있는 개념인가, 일반적인 프로그래밍 개념인가? 앞의 경우만 넣는다.
+- **자연스러운 묶음이 생기면 용어를 소제목 아래로 묶는다.** 모든 용어가 하나의 응집된 영역에 속하면 평평한 목록으로 충분하다.
 
-## Single vs multi-context repos
+## 단일 컨텍스트 저장소와 다중 컨텍스트 저장소
 
-**Single context (most repos):** One `GLOSSARY.md` at the repo root.
+**단일 컨텍스트(대부분의 저장소):** 저장소 루트에 `GLOSSARY.md` 하나를 둔다.
 
-**Multiple contexts:** A `GLOSSARY-MAP.md` at the repo root lists the contexts, where they live, and how they relate to each other:
+**다중 컨텍스트:** 저장소 루트의 `GLOSSARY-MAP.md`가 컨텍스트 목록과 각 위치, 컨텍스트 사이의 관계를 나열한다:
 
 ```md
 # Glossary Map
 
 ## Contexts
 
-- [Ordering](./src/ordering/GLOSSARY.md): receives and tracks customer orders
-- [Billing](./src/billing/GLOSSARY.md): generates invoices and processes payments
-- [Fulfillment](./src/fulfillment/GLOSSARY.md): manages warehouse picking and shipping
+- [Ordering](./src/ordering/GLOSSARY.md): 고객 주문을 받고 추적한다
+- [Billing](./src/billing/GLOSSARY.md): 청구서를 생성하고 결제를 처리한다
+- [Fulfillment](./src/fulfillment/GLOSSARY.md): 창고 피킹과 배송을 관리한다
 
 ## Relationships
 
-- **Ordering → Fulfillment**: Ordering emits `OrderPlaced` events; Fulfillment consumes them to start picking
-- **Fulfillment → Billing**: Fulfillment emits `ShipmentDispatched` events; Billing consumes them to generate invoices
-- **Ordering ↔ Billing**: Shared types for `CustomerId` and `Money`
+- **Ordering → Fulfillment**: Ordering이 `OrderPlaced` 이벤트를 발행하고, Fulfillment가 이를 소비해 피킹을 시작한다
+- **Fulfillment → Billing**: Fulfillment가 `ShipmentDispatched` 이벤트를 발행하고, Billing이 이를 소비해 청구서를 생성한다
+- **Ordering ↔ Billing**: `CustomerId`와 `Money` 타입을 공유한다
 ```
 
-The skill infers which structure applies:
+이 스킬은 어느 구조인지 추론한다:
 
-- If `GLOSSARY-MAP.md` exists, read it to find contexts
-- If only a root `GLOSSARY.md` exists, single context
-- If neither exists, create a root `GLOSSARY.md` lazily when the first term is resolved
+- `GLOSSARY-MAP.md`가 있으면 그것을 읽어 컨텍스트를 찾는다
+- 루트의 `GLOSSARY.md`만 있으면 단일 컨텍스트다
+- 둘 다 없으면 첫 용어가 정리될 때 루트 `GLOSSARY.md`를 만든다(lazily)
 
-When multiple contexts exist, infer which one the current topic relates to. If unclear, ask.
+컨텍스트가 여러 개 있으면 현재 주제가 어느 컨텍스트와 관련되는지 추론한다. 불분명하면 묻는다.

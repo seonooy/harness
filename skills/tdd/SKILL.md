@@ -1,40 +1,40 @@
 ---
 name: tdd
-description: Test-driven development. Use when the user wants to build features or fix bugs test-first, mentions "red-green-refactor", or wants integration tests.
+description: "테스트 주도 개발. 사용자가 기능을 만들거나 버그를 고칠 때 테스트부터 쓰려 하거나, \"red-green-refactor\"를 언급하거나, 통합 테스트를 원할 때 쓴다."
 ---
 
-# Test-Driven Development
+# 테스트 주도 개발
 
-TDD is the red → green loop. This skill is the reference that makes that loop produce tests worth keeping: what a good test is, where tests go, the anti-patterns, and the rules of the loop. Every section applies on every cycle: consult them before and during the loop, not after.
+TDD는 red → green 루프다. 이 스킬은 그 루프가 남겨 둘 만한 테스트를 만들게 하는 참고서다. 좋은 테스트란 무엇인지, 테스트를 어디에 두는지, 안티패턴, 루프의 규칙을 다룬다. 모든 절이 매 사이클마다 적용된다. 루프를 돌리기 전과 도는 중에 참고하고, 끝난 뒤에 보지 않는다.
 
-When exploring the codebase, read `GLOSSARY.md` (if it exists) so test names and interface vocabulary match the project's domain language, and respect ADRs in the area you're touching.
+코드베이스를 살펴볼 때 `GLOSSARY.md`가 있으면 읽어서 테스트 이름과 인터페이스 용어가 프로젝트의 도메인 언어와 맞게 하고, 손대는 영역의 ADR을 존중한다.
 
-## What a good test is
+## 좋은 테스트란
 
-Tests verify behavior through public interfaces, not implementation details. Code can change entirely; tests shouldn't. A good test reads like a specification: "user can checkout with valid cart" tells you exactly what capability exists, and it survives refactors because it doesn't care about internal structure.
+테스트는 구현 세부사항이 아니라 공개 인터페이스를 통해 동작을 검증한다. 코드는 통째로 바뀔 수 있지만 테스트는 그렇지 않아야 한다. 좋은 테스트는 명세처럼 읽힌다. "user can checkout with valid cart"는 어떤 기능이 있는지 정확히 알려 주고, 내부 구조에 관심이 없으니 리팩터링을 견딘다.
 
-See [tests.md](tests.md) for examples and [mocking.md](mocking.md) for mocking guidelines.
+예시는 [tests.md](tests.md), 목(mock) 지침은 [mocking.md](mocking.md)를 본다.
 
-## Seams: where tests go
+## seam: 테스트를 두는 곳
 
-A **seam** is the public boundary you test at: the interface where you observe behavior without reaching inside. Tests live at seams, never against internals.
+**seam**은 테스트하는 공개 경계다. 안쪽에 손대지 않고도 동작을 관찰할 수 있는 인터페이스다. 테스트는 seam에 두고, 내부를 겨냥하지 않는다.
 
-**Test only at pre-agreed seams.** Before writing any test, write down the seams under test and confirm them with the user. No test is written at an unconfirmed seam. You can't test everything, so agreeing the seams up front is how testing effort lands on the critical paths and complex logic instead of every edge case.
+**미리 합의한 seam에서만 테스트한다.** 테스트를 쓰기 전에 테스트할 seam을 적어 사용자와 확정한다. 확정하지 않은 seam에는 테스트를 쓰지 않는다. 모든 것을 테스트할 수는 없다. 그러니 seam을 먼저 합의해야 테스트 노력이 모든 엣지 케이스가 아니라 핵심 경로와 복잡한 로직에 모인다.
 
-Ask: "What's the public interface, and which seams should we test?" Give each proposed seam a one-line note on what it catches and what it misses.
+이렇게 묻는다: "공개 인터페이스가 무엇이고, 어느 seam을 테스트할까요?" 제안하는 seam마다 무엇을 잡고 무엇을 놓치는지 한 줄로 적어 준다.
 
-Pick seams and test sizes with the criteria in `~/.agents/skills/tidy-tests/references/test-criteria.md`: it sorts code into four kinds and says which kind gets a unit, integration or end-to-end test and which gets none. Tag each proposed seam with its kind and test size.
+seam과 테스트 크기는 `~/.agents/skills/tidy-tests/references/test-criteria.md`의 기준으로 고른다. 그 문서는 코드를 네 가지 종류로 나누고, 어느 종류에 단위·통합·end-to-end 테스트를 쓰고 어느 종류에는 쓰지 않는지 알려 준다. 제안하는 seam마다 종류와 테스트 크기를 붙인다.
 
-When the shape of that interface is itself in question (how deep the module is, where the seam belongs, what the interface should expose), open the `codebase-design` skill for the vocabulary. It is the shared source of the module, interface, depth, seam, adapter, leverage and locality terms, and it is a reference to consult, not a session to run.
+그 인터페이스의 모양 자체가 문제일 때(모듈이 얼마나 깊은지, seam이 어디에 있어야 하는지, 인터페이스가 무엇을 드러내야 하는지) `codebase-design` 스킬을 열어 용어를 얻는다. 그 스킬은 모듈, 인터페이스, 깊이(depth), seam, 어댑터, 레버리지(leverage), 지역성(locality)이라는 용어의 공용 출처이고, 참고용으로 펼치는 것이지 따로 진행하는 세션이 아니다.
 
-## Anti-patterns
+## 안티패턴
 
-- **Implementation-coupled**: mocks internal collaborators, tests private methods, or verifies through a side channel (querying the database instead of using the interface). The tell: the test breaks when you refactor but behavior hasn't changed.
-- **Tautological**: the assertion recomputes the expected value the way the code does (`expect(add(a, b)).toBe(a + b)`, a snapshot derived by hand the same way, a constant asserted equal to itself), so it passes by construction and can never disagree with the code. Expected values must come from an independent source of truth: a known-good literal, a worked example, the spec.
-- **Horizontal slicing**: writing all tests first, then all implementation. Bulk tests verify _imagined_ behavior: you test the _shape_ of things rather than user-facing behavior, the tests go insensitive to real changes, and you commit to test structure before understanding the implementation. Work in **vertical slices** instead: one test → one implementation → repeat, each test a **tracer bullet** that responds to what the last cycle taught you.
+- **구현에 결합됨**: 내부 협력 객체를 목으로 대체하거나, private 메서드를 테스트하거나, 우회 경로로 검증한다(인터페이스를 쓰는 대신 데이터베이스를 직접 조회한다). 알아보는 법: 동작은 그대로인데 리팩터링하면 테스트가 깨진다.
+- **동어반복(tautological)**: 단언이 기댓값을 코드와 같은 방식으로 다시 계산한다(`expect(add(a, b)).toBe(a + b)`, 같은 방식으로 손수 만든 스냅샷, 자기 자신과 같다고 단언하는 상수). 그래서 구조상 항상 통과하고 코드와 어긋날 수 없다. 기댓값은 독립된 진실의 출처에서 와야 한다. 정답이 확인된 리터럴, 풀어 본 예제, 명세가 그것이다.
+- **수평 슬라이싱(horizontal slicing)**: 테스트를 전부 먼저 쓰고, 구현을 전부 나중에 쓴다. 한꺼번에 쓴 테스트는 _상상한_ 동작을 검증한다. 사용자에게 보이는 동작이 아니라 사물의 _모양_을 테스트하게 되고, 테스트가 실제 변경에 둔감해지며, 구현을 이해하기도 전에 테스트 구조에 매이게 된다. 대신 **수직 슬라이스(vertical slice)**로 일한다: 테스트 하나 → 구현 하나 → 반복. 각 테스트는 지난 사이클에서 배운 것에 반응하는 **트레이서 불릿(tracer bullet)**이다.
 
-## Rules of the loop
+## 루프의 규칙
 
-- **Red before green.** Write the failing test first, then only enough code to pass it. Don't anticipate future tests or add speculative features.
-- **One slice at a time.** One seam, one test, one minimal implementation per cycle.
-- **Refactoring is not part of the loop.** It belongs to the review stage (see the `code-review` skill), not the red → green implementation cycle.
+- **green 전에 red.** 실패하는 테스트를 먼저 쓰고, 그 테스트를 통과시킬 만큼만 코드를 쓴다. 앞으로 쓸 테스트를 미리 대비하거나 추측성 기능을 넣지 않는다.
+- **한 번에 슬라이스 하나.** 사이클마다 seam 하나, 테스트 하나, 최소 구현 하나.
+- **리팩터링은 루프에 속하지 않는다.** 리팩터링은 리뷰 단계(`code-review` 스킬 참조)의 일이고, red → green 구현 사이클의 일이 아니다.

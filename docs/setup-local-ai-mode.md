@@ -1,53 +1,51 @@
 # Setup: Local AI Issue Mode
 
-Use this mode when the user wants a personal/local agent harness that should
-not be committed to the target repository.
+사용자가 대상 저장소에 커밋하지 않을 개인·로컬 에이전트 하네스를 원할 때 이 모드를 쓴다.
 
-## Install Steps
+## 설치 절차
 
-1. Read `docs/target-project-checklist.md`.
-2. Copy `templates/common/.ai/` to the target repo.
-3. Copy `templates/local-ai/.ai/tasks.md` to target `.ai/tasks.md`.
-4. Copy `templates/local-ai/.ai/issues/0000-issue-template.md` to target
-   `.ai/issues/0000-issue-template.md`.
-6. Create or update target `AGENTS.md` using `templates/common/AGENTS.md` as the
-   shape, then make it concrete for the target project.
-7. In target `AGENTS.md`, set task source to local `.ai` issues only.
-8. Add the snippet from `templates/local-ai/snippets/git-info-exclude.txt` to
-   target `.git/info/exclude`.
-9. If the repo already has tracked `.github/` templates, leave them alone unless
-   the user asks to change GitHub workflow.
+1. `docs/target-project-checklist.md`를 읽는다.
+2. `templates/common/.ai/`를 대상 저장소에 복사한다.
+3. `templates/local-ai/.ai/tasks.md`를 대상 `.ai/tasks.md`로 복사한다.
+4. `templates/local-ai/.ai/issues/0000-issue-template.md`를 대상
+   `.ai/issues/0000-issue-template.md`로 복사한다.
+6. 대상 `AGENTS.md`를 만들거나 고친다. `templates/common/AGENTS.md`를 틀로 삼아 대상 프로젝트에
+   맞게 구체화한다.
+7. 대상 `AGENTS.md`에서 작업 출처를 로컬 `.ai` issue로만 정한다.
+8. `templates/local-ai/snippets/git-info-exclude.txt`의 스니펫을 대상 `.git/info/exclude`에
+   더한다.
+9. 저장소에 이미 git이 추적하는 `.github/` 템플릿이 있으면, 사용자가 GitHub 워크플로를 바꾸라고
+   하지 않는 한 건드리지 않는다.
 
-## Target AGENTS.md Task Source Section
+## 대상 AGENTS.md의 작업 출처 절
 
-Use language like this, adjusted to the project:
+프로젝트에 맞게 고쳐서 이런 식으로 쓴다:
 
 ```md
-## Task Source
+## 작업 출처
 
-This project uses a local personal issue tracker instead of GitHub Issues for
-agent-sized work.
+이 프로젝트는 에이전트 크기의 작업에 GitHub Issues 대신 로컬 개인 issue 트래커를 쓴다.
 
-Source of truth:
-- `.ai/tasks.md`: short issue tab / active backlog index.
-- `.ai/issues/*.md`: one issue per file with Problem, Goal, Scope, Non-goals,
-  Ownership, Acceptance Criteria, Test Plan, Review Focus, and Progress Log.
+기준 출처:
+- `.ai/tasks.md`: 짧은 issue 탭이자 진행 중 백로그 색인.
+- `.ai/issues/*.md`: 파일 하나에 issue 하나. Problem, Goal, Scope, Non-goals, Ownership,
+  Acceptance Criteria, Test Plan, Review Focus, Progress Log를 담는다.
 
-Before implementation:
-- read `.ai/tasks.md`;
-- read the selected `.ai/issues/<id>.md`;
-- confirm branch, ownership, and verification plan;
-- keep edits inside issue ownership.
+구현 전:
+- `.ai/tasks.md`를 읽는다.
+- 고른 `.ai/issues/<id>.md`를 읽는다.
+- 브랜치, 소유 범위, 검증 계획을 확인한다.
+- 수정은 issue의 Ownership 안에서만 한다.
 
-When work finishes or a decision changes:
-- update the matching `.ai/issues/<id>.md`;
-- update `.ai/tasks.md` only if status, priority, or issue list changes.
+작업을 마치거나 결정이 바뀌면:
+- 해당하는 `.ai/issues/<id>.md`를 고친다.
+- 상태, 우선순위, issue 목록이 바뀔 때만 `.ai/tasks.md`를 고친다.
 
-The local harness files are excluded through `.git/info/exclude` and should not
-be pushed unless the user explicitly changes that policy.
+로컬 하네스 파일은 `.git/info/exclude`로 git에서 제외하며, 사용자가 이 정책을 명시적으로 바꾸지
+않는 한 push하지 않는다.
 ```
 
-## Future Prompt Examples
+## 이후 프롬프트 예시
 
 ```text
 AGENTS.md 따라 .ai/tasks.md 읽고 다음 작업 후보 보여줘.
@@ -57,17 +55,16 @@ AGENTS.md 따라 .ai/tasks.md 읽고 다음 작업 후보 보여줘.
 AGENTS.md 따라 .ai/issues/0001-example.md 진행해줘.
 ```
 
-## Verification
+## 검증
 
-After setup, run:
+셋업이 끝나면 실행한다:
 
 ```bash
 find .ai -maxdepth 3 -type f | sort
 git status --short -- AGENTS.md .ai .github
 ```
 
-Expected:
-- `.ai/tasks.md` and `.ai/issues/0000-issue-template.md` exist;
-- a manual scan of generated files finds no leftover setup placeholders;
-- local-only files do not appear in `git status` after `.git/info/exclude` is
-  updated.
+기대 결과:
+- `.ai/tasks.md`와 `.ai/issues/0000-issue-template.md`가 있다.
+- 생성한 파일을 직접 훑어봐도 남은 셋업 자리표시자가 없다.
+- `.git/info/exclude`를 고친 뒤에는 로컬 전용 파일이 `git status`에 나오지 않는다.

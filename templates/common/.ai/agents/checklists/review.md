@@ -1,14 +1,14 @@
-# Review Checklist
+# 리뷰 체크리스트
 
-Use this for reviewer agent sessions.
+reviewer 에이전트 세션에서 쓴다.
 
-- [ ] Bugs or behavioral regressions.
-- [ ] Missing tests for changed behavior.
-- [ ] API contract breaks.
-- [ ] DB model, migration, or session violations when relevant.
-- [ ] Async/background job boundary violations when relevant.
-- [ ] Secret handling problems.
-- [ ] Frontend type-safety issues when relevant.
-- [ ] Scope creep outside the linked task record.
-- [ ] Verification is credible and reproducible.
-- [ ] Follow-up work is explicit.
+- [ ] 버그나 동작 회귀.
+- [ ] 바뀐 동작에 대한 테스트 누락.
+- [ ] API 계약 파손.
+- [ ] 해당하면 DB 모델, 마이그레이션, 세션 위반.
+- [ ] 해당하면 async/백그라운드 job 경계 위반.
+- [ ] 시크릿 처리 문제.
+- [ ] 해당하면 프론트엔드 타입 안전성 문제.
+- [ ] 연결된 작업 기록 밖의 범위 이탈.
+- [ ] 검증이 믿을 만하고 재현 가능하다.
+- [ ] 후속 작업이 명시돼 있다.

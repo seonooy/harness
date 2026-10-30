@@ -1,6 +1,6 @@
 ---
-name: Agent task
-about: Issue-sized task for agent-driven development
+name: 에이전트 작업
+about: 에이전트 주도 개발을 위한 issue 크기의 작업
 title: ""
 labels: ""
 assignees: ""
@@ -19,9 +19,9 @@ assignees: ""
 이번 작업에서 하지 말 것
 
 ## Ownership
-- agent:
-- branch:
-- owned paths:
+- 에이전트:
+- 브랜치:
+- 소유 경로:
 
 ## Acceptance Criteria
 - [ ]

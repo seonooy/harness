@@ -1,5 +1,5 @@
 interface:
   display_name: "To Tickets"
-  short_description: "Split a plan into tracer-bullet tickets"
+  short_description: "계획을 트레이서 불릿 티켓으로 쪼갠다"
 policy:
   allow_implicit_invocation: false

@@ -1,24 +1,24 @@
-# Git Convention
+# Git 규칙
 
-## Branches
+## 브랜치
 
-- `main`: stable/release branch.
-- The target project's base branch is defined in its `AGENTS.md`.
-- Never push directly to protected branches.
-- Branch from the target project's base branch for new work.
+- `main`: 안정/릴리스 브랜치.
+- 대상 프로젝트의 기준 브랜치는 그 프로젝트의 `AGENTS.md`에 정의한다.
+- 보호된 브랜치에 직접 push하지 않는다.
+- 새 작업은 대상 프로젝트의 기준 브랜치에서 분기한다.
 
-## Task Records
+## 작업 기록
 
-- Prefer creating or selecting a task record before work starts.
-- A task record can be a GitHub Issue or local `.ai/issues/<id>.md` file.
-- One task should map to one focused PR when practical.
-- In GitHub Issue mode, link PRs with `Closes #<number>` when the PR completes the issue.
-- In Local AI Issue mode, update the local issue progress log and `.ai/tasks.md`
-  status instead of pretending there is a GitHub Issue.
+- 작업을 시작하기 전에 작업 기록을 만들거나 고르는 것을 우선한다.
+- 작업 기록은 GitHub Issue나 로컬 `.ai/issues/<id>.md` 파일일 수 있다.
+- 가능하면 작업 하나를 집중된 PR 하나에 대응시킨다.
+- GitHub Issue mode에서는 PR이 issue를 완료하면 `Closes #<number>`로 연결한다.
+- Local AI Issue mode에서는 GitHub Issue가 있는 척하지 말고, 로컬 issue의 Progress Log와
+  `.ai/tasks.md`의 상태를 갱신한다.
 
-## Branch Names
+## 브랜치 이름
 
-Use short lowercase names:
+짧은 소문자 이름을 쓴다:
 
 ```text
 feat/task-name
@@ -28,9 +28,9 @@ refactor/task-name
 chore/task-name
 ```
 
-## Commits
+## 커밋
 
-Prefer conventional commits:
+conventional commit을 우선한다:
 
 ```text
 feat:
@@ -41,11 +41,11 @@ chore:
 test:
 ```
 
-## Pull Requests
+## Pull Request
 
-- Target the base branch named in the target project's `AGENTS.md`.
-- Use `.github/pull_request_template.md`.
-- Include verification commands and results.
-- Keep Agent Notes short or `None`.
-- Wait for CI and automated reviews when configured.
-- Human reviewer/maintainer decides merge.
+- 대상 프로젝트의 `AGENTS.md`에 적힌 기준 브랜치를 대상으로 한다.
+- `.github/pull_request_template.md`를 쓴다.
+- 검증 명령과 결과를 넣는다.
+- Agent Notes는 짧게 두거나 `None`으로 둔다.
+- 설정돼 있으면 CI와 자동 리뷰를 기다린다.
+- 병합은 사람 reviewer/maintainer가 결정한다.
