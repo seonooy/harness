@@ -4,24 +4,24 @@ Codex로 일할 때 쓰는 스킬과 프로젝트 셋업 키트다. 애플리케
 
 ## 설치
 
-작업 저장소의 터미널에서 Codex를 켜기 전에 실행한다.
+작업 폴더의 터미널에서 실행한다. 모델을 부르지 않고, 있는 파일은 덮어쓰지 않는다.
 
 ```bash
-git clone https://github.com/seonooy/harness ~/h
-mkdir -p ~/.agents/skills && cp -R ~/h/skills/* ~/.agents/skills/
-codex
+git clone https://github.com/seonooy/harness && bash harness/install.sh && codex
 ```
 
-Codex에 이렇게 말한다.
+스킬은 작업 폴더의 `.agents/skills/`에, 작업 지침은 `AGENTS.md`에 들어간다. `harness/` 폴더는 git에서 제외한다. 설치 뒤에는 바로 일을 시작하면 된다.
+
+검사 키트(`.ai/checks`)까지 쓰려면 Codex에 이렇게 말한다.
 
 ```text
-~/h 보고 이 프로젝트에 셋업해 줘
+./harness 보고 검사 키트를 개인 배치로 셋업해 줘
 ```
 
 ## handoff
 
 `$handoff`로 상태를 작업 폴더의 `.handoff/`에 저장하고, `/new` 뒤 `$handoff 이어`로 이어 한다.
-컨텍스트 알림을 쓰려면 `~/.codex/hooks.json`의 UserPromptSubmit에 `python3 ~/.agents/skills/handoff/nudge.py`를 등록한다.
+컨텍스트 알림을 쓰려면 `~/.codex/hooks.json`의 UserPromptSubmit에 작업 폴더의 `.agents/skills/handoff/nudge.py`를 `python3`로 부르게 등록한다.
 
 ## 출처
 
