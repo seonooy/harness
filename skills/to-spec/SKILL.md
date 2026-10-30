@@ -1,12 +1,12 @@
 ---
 name: to-spec
-description: "현재 대화를 명세(spec)로 바꿔 프로젝트 이슈 트래커에 게시한다. 인터뷰는 하지 않고, 이미 논의한 내용을 종합만 한다."
+description: "현재 대화를 명세(spec)로 바꿔 `docs/spec.md`에 저장한다. 인터뷰는 하지 않고, 이미 논의한 내용을 종합만 한다."
 disable-model-invocation: true
 ---
 
 이 스킬은 현재 대화의 맥락과 코드베이스에 대한 이해를 가져와 명세(spec)를 만든다. 사용자를 인터뷰하지 **않는다**. 이미 아는 것을 종합하기만 한다.
 
-이슈 트래커와 트리아지 라벨 어휘는 미리 받았어야 한다. 받지 못했다면 사용자에게 `$setup-matt-pocock-skills`를 실행하라고 말한다.
+이슈 트래커는 쓰지 않는다. 명세는 `docs/spec.md`에 저장한다.
 
 ## 절차
 
@@ -16,7 +16,7 @@ disable-model-invocation: true
 
 이 seam이 사용자의 기대와 맞는지 사용자와 확인한다.
 
-3. 아래 템플릿으로 명세를 쓰고 프로젝트 이슈 트래커에 게시한다. `ready-for-agent` 트리아지 라벨을 붙인다. 따로 트리아지할 필요는 없다.
+3. 아래 템플릿으로 명세를 써서 `docs/spec.md`에 저장한다.
 
 <spec-template>
 
