@@ -1,0 +1,123 @@
+{
+  "_about": "개인 배치·기존 프로젝트의 단계 목록이다. check.py가 읽는다. 자리표시를 모두 프로젝트 값으로 바꾼다. 보호 파일이라 고친 뒤에는 사용자가 approve를 다시 실행한다.",
+  "version": 1,
+  "project": "<<FILL: 프로젝트 이름>>",
+  "placement": "personal",
+  "base_ref": "<<FILL: 팀 기준 브랜치. 예: origin/main>>",
+  "commands": {
+    "py": ["<<FILL: 프로젝트 가상환경의 python. 예: server/.venv/bin/python>>"],
+    "mypy": ["<<FILL: 개인 도구 환경의 mypy. 예: .ai/checks/tools/.venv/bin/mypy>>"],
+    "lint_imports": ["<<FILL: 개인 도구 환경의 lint-imports. 예: .ai/checks/tools/.venv/bin/lint-imports>>"]
+  },
+  "env": {"PYTHONDONTWRITEBYTECODE": "1"},
+  "env_remove": ["PYTHONPATH", "PYTEST_ADDOPTS"],
+  "_env": "테스트가 개발 DB·Redis 같은 실제 서비스를 가리키지 않게 한다. 그런 변수는 env_remove에 넣거나 env에서 닿지 않는 주소로 바꾼다.",
+  "protected": [
+    ".ai/checks/*.json",
+    ".ai/checks/*.ini",
+    ".ai/checks/*.py",
+    ".ai/checks/kit/**",
+    ".ai/checks/tools/requirements.lock"
+  ],
+  "venvs": ["<<FILL: 프로젝트 가상환경. 예: server/.venv>>"],
+  "import_check": {
+    "cwd": "<<FILL: 최상위 패키지가 있는 폴더. 예: server>>",
+    "module": "<<FILL: 최상위 패키지. 예: app>>"
+  },
+  "stages": [
+    {
+      "name": "format",
+      "kind": "ruff-format",
+      "profiles": ["fast", "all"],
+      "cmd": ["@py", "-m", "ruff", "format", "--check", "--no-cache", "--extend-exclude", ".ai", "--force-exclude", "--output-format", "json", "@paths_or_dot"],
+      "cwd": "<<FILL: 도구를 실행할 폴더. 예: server>>",
+      "scope": "paths",
+      "compare": true,
+      "fix_hint": "포맷이 맞지 않는다. python3 .ai/checks/check.py fix로 고친다"
+    },
+    {
+      "name": "lint",
+      "kind": "ruff",
+      "profiles": ["fast", "all"],
+      "cmd": ["@py", "-m", "ruff", "check", "--no-cache", "--extend-exclude", ".ai", "--force-exclude", "--output-format", "json", "@ruff_overrides", "@paths_or_dot"],
+      "cwd": "<<FILL: 도구를 실행할 폴더. 예: server>>",
+      "scope": "paths",
+      "compare": true,
+      "ruff_rules": "{checks_dir}/ruff-rules.json",
+      "fix_hint": "Ruff 위반의 원인을 고친다. 자동으로 고칠 수 있는 것은 python3 .ai/checks/check.py fix로 고친다"
+    },
+    {
+      "name": "architecture",
+      "kind": "import-linter",
+      "profiles": ["fast", "all"],
+      "cmd": ["@lint_imports", "--config", "{checks_dir}/importlinter.ini", "--no-logo", "--no-cache"],
+      "cwd": "<<FILL: 도구를 실행할 폴더. 예: server>>",
+      "compare": true,
+      "env": {"PYTHONPATH": "{cwd}"},
+      "fix_hint": ".ai/project/architecture.md의 의존 규칙을 어겼다. 아래 import를 규칙이 허락하는 곳으로 옮긴다"
+    },
+    {
+      "name": "types",
+      "kind": "mypy",
+      "profiles": ["all"],
+      "cmd": [
+        "@mypy",
+        "--config-file",
+        "{checks_dir}/mypy.ini",
+        "--python-executable",
+        "{live}/<<FILL: 프로젝트 가상환경. 예: server/.venv>>/bin/python",
+        "--cache-dir",
+        "{cache_dir}/mypy",
+        "<<FILL: 최상위 패키지. 예: app>>"
+      ],
+      "cwd": "<<FILL: 도구를 실행할 폴더. 예: server>>",
+      "compare": true,
+      "fix_hint": "mypy 오류의 원인을 고친다. 무시 주석으로 덮지 않는다"
+    },
+    {
+      "name": "tests",
+      "kind": "pytest-junit",
+      "profiles": ["fast", "all"],
+      "cmd": [
+        "@py",
+        "-m",
+        "pytest",
+        "<<FILL: 서비스 없이 도는 빠른 테스트 경로. 경로마다 한 원소. 예: tests/unit>>",
+        "-q",
+        "-p",
+        "no:cacheprovider",
+        "--junitxml={run_dir}/pytest.xml"
+      ],
+      "cwd": "<<FILL: 도구를 실행할 폴더. 예: server>>",
+      "junit": "{run_dir}/pytest.xml",
+      "fix_hint": "실패한 테스트의 원인을 고친다. 테스트를 지우거나 건너뛰게 바꾸지 않는다"
+    },
+    {
+      "name": "weakening",
+      "kind": "weakening",
+      "profiles": ["all"],
+      "fix_hint": "검사를 약하게 만든 변경이다. 되돌리고 원인을 고친다. 꼭 필요하면 이유를 적어 사용자에게 승인을 요청한다"
+    },
+    {
+      "name": "fix-lint",
+      "kind": "command",
+      "profiles": ["fix"],
+      "cmd": ["@py", "-m", "ruff", "check", "--fix", "--no-cache", "--extend-exclude", ".ai", "--force-exclude", "@ruff_overrides", "@paths"],
+      "cwd": "<<FILL: 도구를 실행할 폴더. 예: server>>",
+      "scope": "changed",
+      "suffixes": [".py", ".pyi"],
+      "ruff_rules": "{checks_dir}/ruff-rules.json",
+      "fix_hint": "자동으로 고치지 못한 Ruff 위반이 남았다. python3 .ai/checks/check.py fast로 보고 직접 고친다"
+    },
+    {
+      "name": "fix-format",
+      "kind": "command",
+      "profiles": ["fix"],
+      "cmd": ["@py", "-m", "ruff", "format", "--no-cache", "--extend-exclude", ".ai", "--force-exclude", "@paths"],
+      "cwd": "<<FILL: 도구를 실행할 폴더. 예: server>>",
+      "scope": "changed",
+      "suffixes": [".py", ".pyi"],
+      "fix_hint": "ruff format이 파일을 고치지 못했다. 문법 오류가 있는지 본다"
+    }
+  ]
+}

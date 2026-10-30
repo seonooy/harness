@@ -1,0 +1,32 @@
+{
+  "_about": "Ruff 규칙 묶음이다. lint 단계가 --config 인자로 넘기므로 프로젝트의 Ruff 설정 위에 덧씌워진다. 보호 파일이다. 기존 코드의 습관은 규칙을 끄는 근거가 아니다. 기준선이 기존 위반을 빼 주므로 규칙을 켜 두고 새 코드부터 바꾼다. 이 프로젝트에서 규칙이 틀렸거나 팀이 합의한 관례일 때만 project_ignore에 \"코드\": \"이유\"로 넣는다. banned_api는 architecture.md의 '외부 호출은 clients에서만' 결정으로 채운다.",
+  "select": ["F", "E", "W", "I", "UP", "B", "SIM", "C4", "PIE", "PERF", "RUF", "ASYNC", "FAST", "S", "BLE", "DTZ", "T20", "ERA", "LOG", "ARG", "PT", "PGH", "TID", "INP", "PL"],
+  "ignore": ["E501", "W191", "PLR0913", "PLR0917", "PLR2004"],
+  "project_ignore": {},
+  "banned_api": {},
+  "per_file_ignores": {
+    "**/tests/**": ["S101", "S105", "S106", "ARG001", "INP001", "TID251", "PLR2004"]
+  },
+  "allowed_confusables": ["‘", "’", "（", "）", "，", "：", "；", "！", "？", "～"],
+  "ban_relative_imports": "all",
+  "_reasons": {
+    "select": "Ruff 0.16에서 기본 규칙이 59개에서 413개로 바뀌었다. 목록을 적어 두어 버전이 올라도 규칙이 조용히 바뀌지 않게 한다",
+    "F, E, W": "파이썬 오류와 기본 스타일",
+    "I": "import 순서",
+    "UP": "지원하는 Python 버전의 문법",
+    "B, SIM, C4, PIE, PERF": "흔한 버그와 불필요하게 복잡하거나 느린 코드",
+    "RUF": "Ruff 고유 규칙. RUF100은 필요 없어진 무시 주석을 잡는다",
+    "ASYNC": "async 엔드포인트 안의 블로킹 호출",
+    "FAST": "FastAPI의 Annotated 의존성, 중복된 response_model, 안 쓰는 경로 매개변수",
+    "S, BLE, DTZ": "보안 규칙, 모든 예외를 삼키는 except, 시간대 없는 datetime",
+    "T20, ERA, ARG": "에이전트가 흔히 남기는 print, 주석 처리한 코드, 안 쓰는 인자",
+    "LOG, PT": "logging과 pytest의 잘못된 사용",
+    "PGH": "뭉뚱그린 무시 주석을 막는다. 무시하려면 규칙 코드를 적어야 한다",
+    "TID": "절대 import만 쓰고, banned_api로 금지 모듈과 고치는 방법을 알린다",
+    "INP": "폴더마다 __init__.py를 둔다. 없으면 그래프 기반 검사가 namespace package를 놓칠 수 있다(확인하지 않았다)",
+    "PL": "복잡도 한도. 인자 개수(PLR0913·PLR0917)와 매직 값(PLR2004)은 잡음이 많아 ignore에 둔다",
+    "ignore": "E501·W191은 포매터가 맡는다",
+    "per_file_ignores": "테스트에서는 assert, 테스트용 비밀번호 문자열, 안 쓰는 fixture 인자, __init__.py 없는 폴더, 금지 모듈, 매직 값을 허용한다",
+    "allowed_confusables": "한국어 문장에 쓰는 작은따옴표와 전각 문장부호. “ ”는 Ruff가 잡지 않아서 넣지 않는다"
+  }
+}

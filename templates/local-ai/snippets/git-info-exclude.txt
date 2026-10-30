@@ -1,0 +1,7 @@
+# Personal agent harness, local-only
+/AGENTS.md
+/.ai/
+
+# Optional: keep GitHub templates private in local-only setup
+/.github/ISSUE_TEMPLATE/
+/.github/pull_request_template.md

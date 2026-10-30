@@ -1,0 +1,11 @@
+{
+  "_about": "ddd 조각: 하나의 bounded context를 헥사고날(포트와 어댑터)로 나눈 구조의 architecture.md 틀, 용어집 GLOSSARY.md, 결정 기록 docs/adr, 언어별 규칙 틀. 프로젝트 소유라 처음 설치할 때만 쓴다. 지금은 python 규칙 틀만 있다. GLOSSARY.md와 docs/adr는 grill-with-docs·improve-codebase-architecture 스킬이 찾는 이름과 자리다.",
+  "files": [
+    {"src": "architecture.md", "dest": ".ai/project/architecture.md", "owner": "project"},
+    {"src": "python/importlinter.ini", "dest": ".ai/checks/importlinter.ini", "owner": "project"},
+    {"src": "GLOSSARY.md", "dest": "GLOSSARY.md", "owner": "project"},
+    {"src": "adr/README.md", "dest": "docs/adr/README.md", "owner": "project"}
+  ],
+  "private": ["/GLOSSARY.md", "/docs/adr"],
+  "links": ["GLOSSARY.md", "docs/adr"]
+}
