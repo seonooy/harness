@@ -1,3 +1,0 @@
-interface:
-  display_name: "dispatch"
-  short_description: "티켓마다 새 하위 에이전트에게 맡기고 메인 세션은 보고와 diff만 검토"

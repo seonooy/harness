@@ -1,3 +1,0 @@
-interface:
-  display_name: "measure"
-  short_description: "주어진 데이터로 평가 기준과 기준선을 만들고, 바꾼 뒤 같은 방법으로 다"

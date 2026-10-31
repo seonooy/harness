@@ -1,0 +1,3 @@
+interface:
+  display_name: "plan"
+  short_description: "설계 문서와 핵심 질문으로 이해 확인"

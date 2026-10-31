@@ -10,9 +10,8 @@ if [ "$PWD" = "$src" ]; then
   exit 2
 fi
 
-core="brief code-review codebase-design diagnosing-bugs dispatch grilling handoff intake
-kit-change kit-deslop kit-no-comments kit-quality-review kit-verify measure recap tdd
-tidy-tests to-spec to-tickets"
+core="build code-review codebase-design diagnosing-bugs finish grilling handoff kit-change
+kit-deslop kit-no-comments kit-quality-review kit-verify plan start tdd tidy-tests to-tickets"
 want_all=no
 [ "${1:-}" = "--all" ] && want_all=yes
 
@@ -51,7 +50,7 @@ find .agents/skills -type f \( -name '*.md' -o -name '*.py' \) -print0 |
     fi
   done
 
-for doc in notes/requirements.md notes/system-map.md notes/eval.md DECISIONS.md; do
+for doc in notes/requirements.md notes/design.md DECISIONS.md; do
   if [ -e "$doc" ]; then
     echo "그대로 둠: $doc"
   else
@@ -66,7 +65,7 @@ fi
 
 url="$(git -C "$src" remote get-url origin 2>/dev/null || echo local)"
 commit="$(git -C "$src" rev-parse --short HEAD 2>/dev/null || echo unknown)"
-paths="AGENTS.md .agents/skills notes/requirements.md notes/system-map.md notes/eval.md DECISIONS.md"
+paths="AGENTS.md .agents/skills notes/requirements.md notes/design.md DECISIONS.md"
 git add -f -- $paths
 if git diff --cached --quiet -- $paths; then
   echo "이미 설치되어 있습니다."
