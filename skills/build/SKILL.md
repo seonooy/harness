@@ -22,7 +22,7 @@ cd .worktrees/<이름> && codex 'notes/tickets/<티켓>.md를 열고 AGENTS.md�
 
 1. 티켓을 열고 `notes/plan.md`에서 이 티켓에 필요한 칸만 읽는다.
 
-2. `.agents/skills/tdd/SKILL.md`와 `.agents/skills/tdd/test-criteria.md`를 연다. 코드를 쓰기 전에 이 표를 낸다. 근거 칸은 기준의 한 구절이고 비워 두지 않는다.
+2. `.agents/skills/tdd/SKILL.md`와 `.agents/skills/tdd/test-criteria.md`를 연다. 코드를 쓰기 전에 이 표를 낸다. 근거 칸은 기준의 한 구절이고 비워 두지 않는다. 승인된 플랜의 테스트 칸이 seam 합의이므로 다시 묻지 않는다.
 
    | 테스트 | 코드 종류 | 크기 | 근거 |
    |---|---|---|---|
