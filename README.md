@@ -7,16 +7,19 @@ Codex로 일할 때 쓰는 스킬과 프로젝트 셋업 키트다. 애플리케
 작업 폴더의 터미널에서 실행한다. 모델을 부르지 않고, 있는 파일은 덮어쓰지 않는다.
 
 ```bash
-git clone https://github.com/seonooy/harness && bash harness/install.sh && codex
+git clone https://github.com/seonooy/harness && bash harness/install.sh && rm -rf harness && codex
 ```
 
-스킬은 작업 폴더의 `.agents/skills/`에, 작업 지침은 `AGENTS.md`에 들어간다. `harness/` 폴더는 git에서 제외한다. 설치 뒤에는 바로 일을 시작하면 된다.
+스킬은 `.agents/skills/`에, 작업 지침은 `AGENTS.md`에, 문서 틀은 `notes/`와 `DECISIONS.md`에 들어간다. 기본은 핵심 스킬 19개다. 전체가 필요하면 `bash harness/install.sh --all`로 설치한다.
 
-검사 키트(`.ai/checks`)까지 쓰려면 Codex에 이렇게 말한다.
+## 흐름
 
-```text
-./harness 보고 검사 키트를 개인 배치로 셋업해 줘
-```
+1. `intake`: 환경 확인, 과제·데이터 재기, 담당자 질문
+2. 담당자 답을 규칙으로 옮기고 `grilling`으로 빈 곳 찾기
+3. `measure`: 평가 기준과 기준선
+4. `$to-spec`, `brief`: 구조를 맞추고 사용자가 승인
+5. `$to-tickets`, `dispatch`: 티켓별 구현, 재측정, 구조 지도 갱신, 커밋
+6. 제출 전: `code-review`, 정리, 정적 검사, `recap`
 
 ## handoff
 

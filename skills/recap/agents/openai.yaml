@@ -1,0 +1,3 @@
+interface:
+  display_name: "recap"
+  short_description: "문서를 코드와 대조하고, 결과물을 자기 말로 설명할 재료를 뽑는다"
