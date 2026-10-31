@@ -1,7 +1,0 @@
-# 개인 에이전트 하네스, 로컬 전용
-/AGENTS.md
-/.ai/
-
-# 선택: 로컬 전용 셋업에서는 GitHub 템플릿도 비공개로 둔다
-/.github/ISSUE_TEMPLATE/
-/.github/pull_request_template.md

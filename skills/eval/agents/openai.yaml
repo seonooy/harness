@@ -1,0 +1,3 @@
+interface:
+  display_name: "eval"
+  short_description: "골든셋이나 점수표로 측정"

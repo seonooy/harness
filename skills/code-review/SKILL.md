@@ -1,4 +1,5 @@
 ---
+disable-model-invocation: true
 name: code-review
 description: "기준점(fixed point: 커밋, 브랜치, 태그, merge-base) 이후의 변경을 두 축으로 리뷰한다. Standards는 코드가 이 저장소에 문서화된 코딩 표준을 따르는지, Spec은 코드가 원래의 이슈·명세가 요구한 대로인지 본다. 두 리뷰를 병렬 서브에이전트로 돌려 나란히 보고한다. 사용자가 브랜치, PR, 작업 중인 변경을 리뷰하려 하거나 \"review since X\"라고 할 때 쓴다."
 ---
@@ -10,7 +11,7 @@ description: "기준점(fixed point: 커밋, 브랜치, 태그, merge-base) 이�
 
 두 축은 **병렬 서브에이전트**로 돌려 서로의 컨텍스트를 오염시키지 않게 한다. 그다음 이 스킬이 두 보고를 모은다.
 
-이슈 트래커는 쓰지 않는다. 명세는 `docs/spec.md`, 규칙은 `notes/requirements.md`, 티켓은 `.scratch/`에서 찾는다.
+이슈 트래커는 쓰지 않는다. 명세는 `notes/plan.md`, 티켓은 `notes/tickets/`에서 찾는다.
 
 ## 절차
 
@@ -28,7 +29,7 @@ diff 명령은 한 번만 정해 둔다: `git diff <fixed-point>...HEAD`(점 세
 
 1. 커밋 메시지의 이슈 참조(`#123`, `Closes #45`, GitLab `!67` 등). 이슈가 있으면 읽는다.
 2. 사용자가 인자로 준 경로.
-3. 브랜치 이름이나 기능과 맞는 `docs/`, `specs/`, `.scratch/` 아래의 명세 파일.
+3. 브랜치 이름이나 기능과 맞는 `notes/plan.md`와 `notes/tickets/`.
 4. 아무것도 못 찾았으면 사용자에게 명세가 어디 있는지 묻는다. 없다고 하면 **Spec** 서브에이전트는 건너뛰고 "사용 가능한 명세 없음"으로 보고한다.
 
 ### 3. 표준 출처 찾기

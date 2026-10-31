@@ -1,4 +1,5 @@
 ---
+disable-model-invocation: true
 name: grilling
 description: "계획, 결정, 아이디어에 대해 사용자를 끈질기게 파고들며 질문한다(grill). 사용자가 자기 생각을 압박 시험(stress-test)하고 싶어 하거나 'grill' 계열 트리거 문구를 쓸 때 쓴다."
 ---

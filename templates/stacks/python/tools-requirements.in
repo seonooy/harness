@@ -1,4 +1,0 @@
-mypy==2.4.0
-import-linter==2.15
-deptry==0.25.1
-pydantic==2.13.5

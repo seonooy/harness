@@ -1,6 +1,0 @@
-interface:
-  display_name: "Tidy Tests"
-  short_description: "테스트가 기준대로인지 점검하고 변이로 증명된 계약 테스트로 정리"
-  default_prompt: "이 기능의 테스트가 테스트 기준대로 짜였는지 점검하고 계약 테스트로 정리해줘. 기준 점검 표와 계약별 변이로 현재 보호를 측정하고, 계획을 보여준 뒤 멈춰."
-policy:
-  allow_implicit_invocation: false

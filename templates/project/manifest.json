@@ -1,8 +1,0 @@
-{
-  "_about": "project 조각: 프로젝트가 채우는 문서. 프로젝트 소유라 처음 설치할 때만 쓴다.",
-  "files": [
-    {"src": "intent.md", "dest": ".ai/project/intent.md", "owner": "project"},
-    {"src": "verification.md", "dest": ".ai/project/verification.md", "owner": "project"},
-    {"src": "rules.md", "dest": ".ai/project/rules.md", "owner": "project"}
-  ]
-}

@@ -1,7 +1,6 @@
 ---
 name: handoff
 description: 작업 상태를 JSON 하나에 저장해 세션을 비운 뒤 이어 한다.
-disable-model-invocation: true
 ---
 
 # 작업 넘기기

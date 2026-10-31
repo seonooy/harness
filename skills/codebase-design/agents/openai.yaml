@@ -1,3 +1,5 @@
 interface:
   display_name: "Codebase Design"
   short_description: "깊은 모듈 설계 용어"
+policy:
+  allow_implicit_invocation: false

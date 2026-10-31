@@ -1,5 +1,3 @@
 interface:
   display_name: "Handoff"
   short_description: "작업 상태를 저장해 비우고 이어 하기"
-policy:
-  allow_implicit_invocation: false

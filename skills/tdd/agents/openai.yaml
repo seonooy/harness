@@ -1,3 +1,5 @@
 interface:
   display_name: "TDD"
   short_description: "테스트 주도 red-green-refactor"
+policy:
+  allow_implicit_invocation: false

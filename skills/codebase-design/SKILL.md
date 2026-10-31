@@ -1,4 +1,5 @@
 ---
+disable-model-invocation: true
 name: codebase-design
 description: "deep module(깊은 모듈)을 설계할 때 쓰는 공통 용어. 모듈의 인터페이스를 설계하거나 개선할 때, 모듈을 깊게 만들 기회(deepening)를 찾을 때, seam을 어디에 둘지 정할 때, 코드를 더 테스트하기 쉽고 AI가 탐색하기 쉽게 만들 때, 또는 다른 스킬이 deep module 용어를 필요로 할 때 쓴다."
 ---

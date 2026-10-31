@@ -1,3 +1,5 @@
 interface:
   display_name: "Code Review"
   short_description: "diff를 저장소 기준과 명세로 리뷰"
+policy:
+  allow_implicit_invocation: false

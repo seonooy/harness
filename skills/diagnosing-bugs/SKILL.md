@@ -1,4 +1,5 @@
 ---
+disable-model-invocation: true
 name: diagnosing-bugs
 description: "어려운 버그와 성능 저하를 위한 진단 루프. 사용자가 \"diagnose\"/\"debug this\"라고 하거나, 무언가 깨졌다·예외가 난다·실패한다·느리다고 보고할 때 쓴다."
 ---

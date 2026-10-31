@@ -1,6 +1,6 @@
 ---
 name: to-tickets
-description: "계획, 명세, 또는 현재 대화를 트레이서 불릿(tracer bullet) 티켓 묶음으로 쪼갠다. 티켓마다 자신을 막는(blocking) 관계를 선언하고, 티켓당 파일 하나로 `.scratch/`에 저장한다."
+description: "계획, 명세, 또는 현재 대화를 트레이서 불릿(tracer bullet) 티켓 묶음으로 쪼갠다. 티켓마다 자신을 막는(blocking) 관계를 선언하고, 티켓당 파일 하나로 `notes/tickets/`에 저장한다."
 disable-model-invocation: true
 ---
 
@@ -59,7 +59,7 @@ disable-model-invocation: true
 
 승인된 티켓을 저장한다.
 
-- 티켓마다 파일 하나를 `.scratch/<feature-slug>/issues/<NN>-<slug>.md`에 쓴다. 번호는 `01`부터 의존 순서대로(막는 티켓이 먼저) 매긴다. 각 파일의 "Blocked by"에 그 티켓이 의존하는 번호/제목을 적는다. 아래의 티켓별 파일 템플릿을 쓴다. 파일 하나에 티켓 하나이고, 하나로 합친 파일은 절대 만들지 않는다.
+- 티켓마다 파일 하나를 `notes/tickets/<NN>-<slug>.md`에 쓴다. 번호는 `01`부터 의존 순서대로(막는 티켓이 먼저) 매긴다. 각 파일의 "Blocked by"에 그 티켓이 의존하는 번호/제목을 적는다. 아래의 티켓별 파일 템플릿을 쓴다. 파일 하나에 티켓 하나이고, 하나로 합친 파일은 절대 만들지 않는다.
 
 **프론티어(frontier)** 기준으로 일한다. 프론티어는 막는 티켓이 모두 끝난 티켓 전부다. 순수하게 일렬인 사슬이면 위에서 아래로 간다.
 

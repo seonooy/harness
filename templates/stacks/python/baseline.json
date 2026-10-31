@@ -1,5 +1,0 @@
-{
-  "_about": "공유 배치의 기준선이다. 설치할 때 이미 있던 위반을 단계별로 적는다. 항목은 path, code, message, text, reason(허용하는 이유)이다. 줄어들기만 한다. 고쳐진 항목은 harness.py prune --stage <단계>로 지운다. 보호 파일이다. 개인 배치는 기준선 대신 merge-base와 비교하므로 이 파일을 읽지 않는다.",
-  "version": 1,
-  "stages": {}
-}
