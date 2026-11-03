@@ -1,5 +1,5 @@
 ---
-name: plan
+name: my-plan
 description: "구현 전에: notes/plan.md에 요구사항, 구조, 결정의 근거를 쓰고 사용자가 설명할 수 있게 된 뒤 승인받아 티켓으로 나눈다"
 ---
 

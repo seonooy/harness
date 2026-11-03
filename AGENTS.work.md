@@ -6,7 +6,7 @@
 
 ## 순서
 
-`$start` 조사 → `$plan` 설계와 승인 → `$build` 구현 → `$finish` 마무리. 필요할 때 `$eval` 측정, `$handoff` 세션 넘기기.
+`$start` 조사 → `$my-plan` 설계와 승인 → `$build` 구현 → `$finish` 마무리. 필요할 때 `$eval` 측정, `$handoff` 세션 넘기기.
 
 ## 일하는 방식
 

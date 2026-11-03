@@ -11,7 +11,7 @@ git clone https://github.com/seonooy/harness && bash harness/install.sh && rm -r
 | 부르는 말 | 하는 일 |
 |---|---|
 | `$start` | 시킨 조사를 하고 `notes/briefing.md`에 쌓는다 |
-| `$plan` | `notes/plan.md`에 결정과 근거를 남기고, 사용자가 설명하고 승인하면 티켓으로 나눈다 |
+| `$my-plan` | `notes/plan.md`에 결정과 근거를 남기고, 사용자가 설명하고 승인하면 티켓으로 나눈다 |
 | `$build` | 티켓마다 테스트 표, 구현, 검토, 커밋. 겹치지 않으면 worktree 병렬 |
 | `$finish` | 점검, 문서 대조, 사용자 설명 |
 | `$eval` | 골든셋이나 점수표로 재고 기준선과 전후 값을 남긴다 |
