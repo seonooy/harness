@@ -5,7 +5,7 @@ description: "구현 전에: notes/plan.md에 요구사항, 구조, 결정의 �
 
 이 스킬이 끝나기 전에는 구현 코드를 쓰지 않는다. 구조를 바꾸자는 요청으로 불렸으면 바뀌는 칸만 고치고 그 부분만 다시 설명받는다.
 
-1. `notes/briefing.md`와 `notes/plan.md`를 연다. 요구사항을 "~이면 ~한다" 규칙과 예시로 적는다.
+1. `notes/briefing.md`와 `notes/plan.md`를 연다. `notes/data-map.md`가 있으면 그것도 연다. 요구사항을 "~이면 ~한다" 규칙과 예시로 적는다. 데이터 지도의 업무 규칙과 조심할 것도 규칙으로 옮긴다.
 
 2. `.agents/skills/codebase-design/SKILL.md`를 연다. 모양이 다른 구조 안을 둘 이상 놓고 비교해 하나를 추천한다.
 

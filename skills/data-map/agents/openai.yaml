@@ -1,0 +1,3 @@
+interface:
+  display_name: "data-map"
+  short_description: "CSV 데이터 지도 만들기"

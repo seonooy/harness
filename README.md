@@ -10,7 +10,7 @@ git clone https://github.com/seonooy/harness && bash harness/install.sh && rm -r
 
 | 부르는 말 | 하는 일 |
 |---|---|
-| `$start` | 시킨 조사를 하고 `notes/briefing.md`에 쌓는다 |
+| `$start` | CSV·TSV가 있으면 먼저 데이터를 재서 "한눈에" 다섯 줄을 알리고, 시킨 조사를 해서 `notes/briefing.md`에 쌓는다. "데이터 지도 끝까지"라고 시키면 관계를 판정해 `notes/data-map.md`와 구조도를 만든다 |
 | `$my-plan` | `notes/plan.md`에 결정과 근거를 남기고, 사용자가 설명하고 승인하면 티켓으로 나눈다 |
 | `$build` | 티켓마다 테스트 표, 구현, 검토, 커밋. 겹치지 않으면 worktree 병렬 |
 | `$finish` | 점검, 문서 대조, 사용자 설명 |
@@ -18,6 +18,8 @@ git clone https://github.com/seonooy/harness && bash harness/install.sh && rm -r
 | `$handoff` | 상태를 `.handoff/`에 저장하고 새 세션에서 이어 한다 |
 
 나머지 스킬은 위 여섯이 필요할 때 불러 쓴다.
+
+`data-map`의 스크립트는 파이썬 표준 라이브러리만 쓴다. 시험: `python3 -m unittest discover -s tests`. 큰 데이터 시험용 가짜 데이터: `python3 tests/make_big_data.py <폴더>`.
 
 ## 출처
 
